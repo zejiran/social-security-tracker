@@ -1,0 +1,88 @@
+.app-container {
+  padding: 20px;
+}
+
+.month-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.income-table {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.settings-panel {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.recurring-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.calculator-card {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.calculation-method {
+  background-color: white;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.calculation-detail {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.calculation-total {
+  font-weight: bold;
+  padding: 10px 0;
+  border-top: 2px solid #ddd;
+  margin-top: 10px;
+}
+
+.trm-value {
+  color: #0d6efd;
+  font-weight: bold;
+}
+
+.date-field {
+  min-width: 150px;
+}
+
+.currency-field {
+  min-width: 120px;
+}
+
+.tab-content {
+  padding: 20px;
+  background-color: white;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
