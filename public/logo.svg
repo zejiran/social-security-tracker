@@ -1,0 +1,26 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="128" fill="url(#gradient1)"/>
+  <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="512">
+    <rect width="512" height="512" rx="128" fill="white"/>
+  </mask>
+  <g mask="url(#mask0)">
+    <path opacity="0.1" d="M512 0H0V512H512V0Z" fill="white"/>
+    <path opacity="0.08" d="M400 240C413.255 240 424 229.255 424 216C424 202.745 413.255 192 400 192C386.745 192 376 202.745 376 216C376 229.255 386.745 240 400 240Z" fill="white"/>
+    <path opacity="0.1" d="M280 85C293.255 85 304 74.2548 304 61C304 47.7452 293.255 37 280 37C266.745 37 256 47.7452 256 61C256 74.2548 266.745 85 280 85Z" fill="white"/>
+    <path opacity="0.05" d="M134 197C147.255 197 158 186.255 158 173C158 159.745 147.255 149 134 149C120.745 149 110 159.745 110 173C110 186.255 120.745 197 134 197Z" fill="white"/>
+    <path opacity="0.1" d="M110 437C123.255 437 134 426.255 134 413C134 399.745 123.255 389 110 389C96.7452 389 86 399.745 86 413C86 426.255 96.7452 437 110 437Z" fill="white"/>
+    <path opacity="0.07" d="M456 376C469.255 376 480 365.255 480 352C480 338.745 469.255 328 456 328C442.745 328 432 338.745 432 352C432 365.255 442.745 376 456 376Z" fill="white"/>
+    <path d="M364 256C364 316.68 314.68 366 254 366C193.32 366 144 316.68 144 256C144 195.32 193.32 146 254 146C314.68 146 364 195.32 364 256Z" fill="white"/>
+    <path d="M288 232H258V170C258 167.8 256.2 166 254 166C251.8 166 250 167.8 250 170V232H220C217.8 232 216 233.8 216 236C216 238.2 217.8 240 220 240H250V320C250 322.2 251.8 324 254 324C256.2 324 258 322.2 258 320V240H288C290.2 240 292 238.2 292 236C292 233.8 290.2 232 288 232Z" fill="url(#gradient2)"/>
+  </g>
+  <defs>
+    <linearGradient id="gradient1" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4361ee"/>
+      <stop offset="1" stop-color="#3f8cff"/>
+    </linearGradient>
+    <linearGradient id="gradient2" x1="216" y1="166" x2="292" y2="324" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4361ee"/>
+      <stop offset="1" stop-color="#3f8cff"/>
+    </linearGradient>
+  </defs>
+</svg>

@@ -2,19 +2,176 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="%PUBLIC_URL%/logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#3a7bd5" />
     <meta
       name="description"
       content="Social Security Tracker - Automate your contractor payment and social security calculations"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <meta name="keywords" content="social security, contractor, payment tracking, trm, colombia" />
+    <meta name="author" content="Social Security Tracker" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo.svg" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Preconnect to Font Sources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Load Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://social-security-tracker.app/" />
+    <meta property="og:title" content="Social Security Tracker" />
+    <meta property="og:description" content="Automate your contractor payment and social security calculations" />
+    <meta property="og:image" content="%PUBLIC_URL%/og-image.png" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://social-security-tracker.app/" />
+    <meta property="twitter:title" content="Social Security Tracker" />
+    <meta property="twitter:description" content="Automate your contractor payment and social security calculations" />
+    <meta property="twitter:image" content="%PUBLIC_URL%/og-image.png" />
+    
     <title>Social Security Tracker</title>
+    
+    <!-- Preload CSS -->
+    <style>
+      .app-loader {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #f8faff;
+        background-image: radial-gradient(circle at top right, rgba(67, 97, 238, 0.03), transparent 60%),
+                          radial-gradient(circle at 20% 80%, rgba(76, 195, 138, 0.03), transparent 60%);
+        z-index: 9999;
+        transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      .app-loader-logo {
+        width: 80px;
+        height: 80px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #4361ee, #3f8cff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 24px;
+        box-shadow: 0 10px 25px rgba(67, 97, 238, 0.25);
+        position: relative;
+        overflow: hidden;
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+      
+      .app-loader-logo::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z' fill='%23ffffff' fill-opacity='0.07' fill-rule='evenodd'/%3E%3C/svg%3E");
+        opacity: 0.6;
+      }
+      
+      .app-loader-logo-inner {
+        color: white;
+        font-size: 36px;
+        font-weight: 800;
+        font-family: 'Inter', sans-serif;
+        position: relative;
+        z-index: 2;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+      }
+      
+      .app-loader-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(67, 97, 238, 0.1);
+        border-left-color: #4361ee;
+        border-radius: 50%;
+        animation: spin 1.2s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite;
+        box-shadow: 0 0 10px rgba(67, 97, 238, 0.1);
+      }
+      
+      .app-loader-text {
+        margin-top: 20px;
+        color: #2d3748;
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        letter-spacing: -0.01em;
+        opacity: 0;
+        animation: fadeInText 0.5s ease-out 0.5s forwards;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.9; transform: scale(0.97); }
+      }
+
+      @keyframes fadeInText {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      @media (prefers-color-scheme: dark) {
+        .app-loader {
+          background-color: #0f172a;
+          background-image: radial-gradient(circle at top right, rgba(67, 97, 238, 0.07), transparent 60%),
+                          radial-gradient(circle at 20% 80%, rgba(76, 195, 138, 0.05), transparent 60%);
+        }
+        
+        .app-loader-text {
+          color: #f1f5f9;
+        }
+
+        .app-loader-spinner {
+          border-color: rgba(67, 97, 238, 0.2);
+          border-left-color: #4361ee;
+        }
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    
+    <!-- Loading Screen -->
+    <div class="app-loader" id="appLoader">
+      <div class="app-loader-logo">
+        <div class="app-loader-logo-inner">$</div>
+      </div>
+      <div class="app-loader-spinner"></div>
+      <div class="app-loader-text">Preparing Social Security Tracker...</div>
+    </div>
+    
     <div id="root"></div>
+    
+    <script>
+      // Enhanced loader animation
+      window.onload = function() {
+        const loader = document.getElementById('appLoader');
+        if (loader) {
+          setTimeout(() => {
+            loader.style.opacity = '0';
+            setTimeout(() => {
+              loader.style.display = 'none';
+            }, 600);
+          }, 300);
+        }
+      };
+    </script>
   </body>
 </html>

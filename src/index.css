@@ -1,43 +1,359 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --secondary: #10b981;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --info: #3b82f6;
+  --light: #f9fafb;
+  --dark: #111827;
+  --border-color: #e5e7eb;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --transition: all 0.2s ease;
+  --border-radius: 0.5rem;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'Roboto',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f8f9fa;
+  background-color: #f9fafb;
+  color: #111827;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  background-color: #f1f5f9;
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 85%;
+  color: #2563eb;
+  transition: var(--transition);
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 1.5rem;
+  animation: fadeIn 0.5s ease;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color: #343a40;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #111827;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.form-control {
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  padding: 0.65rem 1rem;
+  transition: var(--transition);
+  font-size: 0.95rem;
 }
 
 .form-control:focus {
-  border-color: #80bdff;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  outline: none;
 }
 
 .table {
   background-color: white;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  margin-bottom: 1.5rem;
+  border: none;
+  width: 100%;
+}
+
+.table th {
+  background-color: #f9fafb;
+  font-weight: 600;
+  padding: 1rem;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid #e5e7eb;
 }
 
 .total-row {
-  font-weight: bold;
-  background-color: #f8f9fa;
+  font-weight: 700;
+  background-color: #f3f4f6;
+  border-top: 2px solid #e5e7eb;
 }
 
 .card {
-  margin-bottom: 20px;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  margin-bottom: 1.5rem;
+  box-shadow: var(--card-shadow);
+  border-radius: var(--border-radius);
+  border: none;
+  transition: var(--transition);
+  overflow: hidden;
+  background-color: white;
+}
+
+.card-header {
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem 1.5rem;
+  font-weight: 600;
+}
+
+/* Datepicker styles moved to datepicker.module.css */
+
+.calculation-method {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 0;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  border: none;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
+}
+
+.calculation-detail {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #a5a4ff;
+}
+
+.calculation-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background-color: #e4e4ff;
+  font-weight: 700;
+  border-top: 2px solid #a5a4ff;
+  font-size: 1.05rem;
+  color: var(--primary);
+}
+
+.trm-value {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.date-field {
+  min-width: 150px;
+  font-family: 'Inter', sans-serif;
+}
+
+.currency-field {
+  min-width: 120px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.tab-content {
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  box-shadow: var(--card-shadow);
+}
+
+.formula-explanation {
+  padding: 1.5rem;
+  background-color: #f9fafb;
+  border-radius: var(--border-radius);
+  margin: 1.5rem 0;
+  box-shadow: var(--card-shadow);
+}
+
+.contributions-list {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+  box-shadow: var(--card-shadow);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+.btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  transition: var(--transition);
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.btn:hover::before {
+  transform: translateX(0);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #60a5fa;
+    --primary-hover: #93c5fd;
+    --border-color: #374151;
+    --light: #1f2937;
+    --dark: #e5e7eb;
+  }
+
+  body {
+    background-color: #111827;
+    color: #ffffff;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #ffffff;
+  }
+
+  .card,
+  .table,
+  .calculation-method {
+    background-color: #1f2937;
+    border-color: #374151;
+  }
+
+  .card-header,
+  .table th {
+    background-color: #111827;
+    border-color: #374151;
+    color: #ffffff;
+  }
+
+  .calculation-detail {
+    border-color: #374151;
+    color: #ffffff;
+  }
+
+  .calculation-total {
+    background-color: #111827;
+    border-color: #374151;
+    color: #60a5fa;
+  }
+
+  code {
+    background-color: #1f2937;
+    color: #93c5fd;
+  }
+
+  .form-control {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #ffffff;
+  }
+
+  .form-control:focus {
+    border-color: var(--primary);
+    background-color: #1f2937;
+  }
+
+  .table th {
+    background-color: #111827;
+    color: #ffffff;
+  }
+
+  .total-row {
+    background-color: #111827;
+    color: #ffffff;
+  }
+
+  .formula-explanation {
+    background-color: #111827;
+    color: #ffffff;
+  }
+
+  .contributions-list {
+    background-color: #111827;
+    color: #ffffff;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #ffffff;
+    -webkit-box-shadow: 0 0 0px 1000px #1f2937 inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  .text-secondary {
+    color: #e4e4ff !important;
+  }
+
+  .text-muted {
+    color: #a5a4ff !important;
+  }
 }

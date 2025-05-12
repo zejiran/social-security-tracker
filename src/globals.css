@@ -1,0 +1,333 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .animate-in {
+    animation-duration: 150ms;
+    animation-timing-function: cubic-bezier(0.1, 0.99, 0.1, 1);
+    animation-fill-mode: backwards;
+  }
+  .animate-out {
+    animation-duration: 150ms;
+    animation-timing-function: cubic-bezier(0.1, 0.99, 0.1, 1);
+    animation-fill-mode: forwards;
+  }
+
+  .fade-in {
+    animation-name: fadeIn;
+  }
+  .fade-out {
+    animation-name: fadeOut;
+  }
+  .slide-in-from-right {
+    animation-name: slideInFromRight;
+  }
+  .slide-in-from-left {
+    animation-name: slideInFromLeft;
+  }
+  .slide-in-from-top {
+    animation-name: slideInFromTop;
+  }
+  .slide-in-from-bottom {
+    animation-name: slideInFromBottom;
+  }
+  .slide-out-to-right {
+    animation-name: slideOutToRight;
+  }
+  .slide-out-to-left {
+    animation-name: slideOutToLeft;
+  }
+  .slide-out-to-top {
+    animation-name: slideOutToTop;
+  }
+  .slide-out-to-bottom {
+    animation-name: slideOutToBottom;
+  }
+
+  /* Keyframes for animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes slideInFromRight {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes slideInFromLeft {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes slideInFromTop {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  @keyframes slideInFromBottom {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  @keyframes slideOutToRight {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+  @keyframes slideOutToLeft {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  @keyframes slideOutToTop {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-100%);
+    }
+  }
+  @keyframes slideOutToBottom {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(100%);
+    }
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom application styles */
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.app-header {
+  @apply flex flex-col md:flex-row justify-between items-center mb-8;
+}
+
+.app-title {
+  @apply text-2xl md:text-3xl font-bold flex items-center gap-2 mb-4 md:mb-0;
+}
+
+.calculator-container {
+  @apply space-y-6;
+}
+
+.summary-banner {
+  @apply bg-card rounded-lg p-5 shadow-sm border;
+}
+
+.summary-header {
+  @apply mb-4;
+}
+
+.summary-header h2 {
+  @apply text-xl md:text-2xl font-bold mb-2;
+}
+
+.summary-subheader {
+  @apply text-muted-foreground;
+}
+
+.settings-controls {
+  @apply pt-3 border-t;
+}
+
+.calculation-result-cards {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+}
+
+.calculation-method {
+  @apply h-full;
+}
+
+.method-tag {
+  @apply text-xs font-medium px-2 py-1 rounded-full bg-secondary text-white;
+}
+
+.calculation-detail {
+  @apply flex justify-between py-2 border-b text-sm;
+}
+
+.calculation-total {
+  @apply flex justify-between py-3 font-bold text-base mt-2;
+}
+
+.formula-badge {
+  @apply flex items-center gap-2 rounded-md bg-[--background] p-2 text-xs;
+}
+
+.formula-icon {
+  @apply bg-primary text-primary-foreground w-6 h-6 rounded-md flex items-center justify-center font-bold;
+}
+
+.calculation-formula {
+  @apply mt-4;
+}
+
+.method-comparison {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4 mb-6;
+}
+
+.method-box {
+  @apply bg-card p-4 rounded-lg border shadow-sm;
+}
+
+.formula-code {
+  @apply mt-2 p-2 bg-muted rounded-md text-sm font-mono;
+}
+
+.contributions-list {
+  @apply space-y-1;
+}
+
+.rounded-note {
+  @apply bg-card p-4 rounded-lg border flex gap-3 items-start;
+}
+
+.note-icon {
+  @apply flex-shrink-0 text-xl;
+}
+
+.comparison-table-header {
+  @apply font-bold text-base mb-3;
+}
+
+.comparison-table {
+  @apply w-full border-collapse;
+}
+
+.comparison-table th {
+  @apply px-3 py-2 text-sm font-medium text-left;
+}
+
+.comparison-table td {
+  @apply border-t px-3 py-2 text-sm;
+}
+
+.total-column {
+  @apply font-bold;
+}
+
+.difference-row {
+  @apply bg-[--background] text-primary font-bold;
+}
+
+.empty-state {
+  @apply flex flex-col items-center justify-center gap-2 text-muted-foreground;
+}
+
+.pulse-animation {
+  @apply animate-pulse;
+}
+
+.app-footer {
+  @apply border-t mt-12 pt-6;
+}
