@@ -308,10 +308,17 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
                               type="number"
                               placeholder="Enter TRM"
                               value={entry.trm || ''}
-                              onChange={e =>
-                                onEntryChange(index, 'trm', Number(e.target.value) || 0)
-                              }
+                              onChange={e => {
+                                const value = e.target.value ? Number(e.target.value) : 0;
+                                onEntryChange(index, 'trm', value);
+                              }}
+                              onFocus={() => {
+                                if (editingTRM !== index) {
+                                  setEditingTRM(index);
+                                }
+                              }}
                               className="clean-input shadow-sm rounded-md"
+                              autoFocus={editingTRM === index}
                             />
                             {editingTRM === index && (
                               <Button

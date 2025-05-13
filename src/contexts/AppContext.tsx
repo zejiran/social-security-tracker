@@ -149,10 +149,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         }
       } else if (field === 'trm') {
         // If TRM changed, recalculate based on the current currency
-        if (newEntries[entryIndex].currency === 'USD') {
-          newEntries[entryIndex].cop = newEntries[entryIndex].usd * newEntries[entryIndex].trm;
-        } else {
-          newEntries[entryIndex].usd = newEntries[entryIndex].cop / newEntries[entryIndex].trm;
+        const trmValue = typeof value === 'string' ? parseFloat(value) || 0 : Number(value) || 0;
+
+        if (trmValue > 0) {
+          if (newEntries[entryIndex].currency === 'USD') {
+            newEntries[entryIndex].cop = newEntries[entryIndex].usd * trmValue;
+          } else {
+            newEntries[entryIndex].usd = newEntries[entryIndex].cop / trmValue;
+          }
         }
       }
 
