@@ -1,5 +1,7 @@
 import { format } from 'date-fns';
+import { Check, Copy } from 'lucide-react';
 import React from 'react';
+import { useState } from 'react';
 
 import { Card, CardHeader, CardContent } from '../components/ui/card';
 import { Label } from '../components/ui/label';
@@ -66,6 +68,15 @@ const SocialSecurityCalculator: React.FC<SocialSecurityCalculatorProps> = ({
     return `${(value * 100).toFixed(2)}%`;
   };
 
+  const [copied, setCopied] = useState(false);
+  const rawIBC = Math.round(presumption.base);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(rawIBC.toString());
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
   return (
     <div className="calculator-container">
       <div className="summary-banner mb-4">
@@ -73,9 +84,27 @@ const SocialSecurityCalculator: React.FC<SocialSecurityCalculatorProps> = ({
           <h2>
             Social Security Summary for <span className="accent-text">{monthDisplay}</span>
           </h2>
-          <p className="summary-subheader">
-            Based on total income of{' '}
-            <span className="highlight fw-bold">$ {formatCOP(totalIncome)}</span>
+          <p className="summary-subheader flex items-center flex-wrap gap-2">
+            Based on your total income of {formatCOP(totalIncome)}, your recommended IBC is{' '}
+            <span className="highlight fw-bold inline-flex items-center gap-1">
+              {formatCOP(rawIBC)}
+              <button
+                onClick={handleCopy}
+                title="Copy raw IBC value"
+                className="copy-button"
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  padding: 0,
+                  margin: 0,
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                }}
+              >
+                {copied ? <Check size={16} className="text-green-600" /> : <Copy size={16} />}
+              </button>
+            </span>
           </p>
         </div>
 

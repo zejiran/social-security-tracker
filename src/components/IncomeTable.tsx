@@ -1,4 +1,4 @@
-import { Download, RefreshCw, X, List } from 'lucide-react';
+import { Download, RefreshCw, X, List, Edit, Check } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 
 import { Badge } from '../components/ui/badge';
@@ -38,6 +38,7 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
   totalCOP,
 }) => {
   const [isLoading, setIsLoading] = useState<number | null>(null);
+  const [editingTRM, setEditingTRM] = useState<number | null>(null);
 
   const ensureDate = (dateValue: Date | string | undefined): Date => {
     if (!dateValue) {
@@ -191,16 +192,42 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
                         />
                       </TableCell>
                       <TableCell className="text-center">
-                        {entry.trm && entry.trm > 0 ? (
-                          <div className="trm-value font-bold">{entry.trm.toFixed(2)}</div>
-                        ) : entry.trm === 0 ? (
-                          <Input
-                            type="number"
-                            placeholder="Enter TRM"
-                            value={entry.trm || ''}
-                            onChange={e => onEntryChange(index, 'trm', Number(e.target.value) || 0)}
-                            className="clean-input shadow-sm rounded-md"
-                          />
+                        {entry.trm && entry.trm > 0 && editingTRM !== index ? (
+                          <div className="trm-value font-bold flex items-center justify-between">
+                            <span>{entry.trm.toFixed(2)}</span>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setEditingTRM(index)}
+                              className="ml-2 h-6 w-6 p-0"
+                            >
+                              <Edit size={12} />
+                              <span className="sr-only">Edit TRM</span>
+                            </Button>
+                          </div>
+                        ) : entry.trm === 0 || editingTRM === index ? (
+                          <div className="flex items-center">
+                            <Input
+                              type="number"
+                              placeholder="Enter TRM"
+                              value={entry.trm || ''}
+                              onChange={e =>
+                                onEntryChange(index, 'trm', Number(e.target.value) || 0)
+                              }
+                              className="clean-input shadow-sm rounded-md"
+                            />
+                            {editingTRM === index && (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => setEditingTRM(null)}
+                                className="ml-1 h-6 w-6 p-0"
+                              >
+                                <Check size={12} />
+                                <span className="sr-only">Save TRM</span>
+                              </Button>
+                            )}
+                          </div>
                         ) : (
                           <Button
                             variant="outline"
@@ -292,7 +319,8 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
               <p className="mb-0">
                 TRM values are fetched automatically from{' '}
                 <span className="text-primary fw-medium">trm-colombia.vercel.app</span> API on the
-                date selected. If unavailable, you can enter them manually.
+                date selected. You can edit TRM values at any time by clicking the edit icon next to
+                the value.
               </p>
             </div>
           </div>
