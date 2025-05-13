@@ -20,7 +20,10 @@ Track your contractor income and automate Colombian social security calculations
 - **Local Storage**: Store data securely in your browser with IndexedDB
 - **Excel Export**: Generate professional reports for financial records
 
-<img width="1384" alt="1" src="https://github.com/user-attachments/assets/82e0e10a-4c41-42b9-9ec1-0b3a870da5ea" />
+<img src="https://github.com/user-attachments/assets/6260bb24-5bb8-4037-84e4-1c2be046da78" width="100%" alt="Screenshot 1" />
+<div style="display: flex; gap: 10px; margin-top: 10px;">
+<img src="https://github.com/user-attachments/assets/e06d2d9f-c886-48b2-bd1f-cef7d3f1fec7" style="width: 51%;" alt="Screenshot 2" /><img src="https://github.com/user-attachments/assets/479c945a-35e2-4958-8525-4725a2d859d0" style="width: 49%;" alt="Screenshot 3" />
+</div>
 
 ## Quick Setup
 
