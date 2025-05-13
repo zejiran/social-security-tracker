@@ -41,6 +41,9 @@ export const useAppState = () => {
     if (Array.isArray(savedEntries) && savedEntries.length > 0) {
       const updatedEntries = savedEntries.map(entry => {
         const matchingItem = recurringItems.find(item => item.id === entry.itemId);
+        if (!entry.currency) {
+          entry.currency = 'USD';
+        }
         if (matchingItem && entry.name !== matchingItem.name) {
           return { ...entry, name: matchingItem.name };
         }
@@ -52,6 +55,7 @@ export const useAppState = () => {
           updatedEntries.push({
             itemId: item.id,
             name: item.name,
+            currency: 'USD',
             usd: item.defaultUSD,
             date: new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 15),
             trm: 0,
@@ -65,6 +69,7 @@ export const useAppState = () => {
       const newEntries: IncomeEntry[] = recurringItems.map(item => ({
         itemId: item.id,
         name: item.name,
+        currency: 'USD',
         usd: item.defaultUSD,
         date: new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 15),
         trm: 0,

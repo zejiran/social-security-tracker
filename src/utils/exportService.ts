@@ -25,7 +25,9 @@ export const exportToExcel = async (
   monthName: string
 ): Promise<void> => {
   const filteredEntries = incomeEntries.filter(entry => {
-    const hasValue = entry.usd !== undefined && entry.usd !== null && entry.usd !== 0;
+    const hasValue =
+      (entry.currency === 'USD' && entry.usd !== 0) ||
+      (entry.currency === 'COP' && entry.cop !== 0);
     const hasDate = entry.date !== undefined && entry.date !== null;
     return hasValue && hasDate;
   });
@@ -48,6 +50,7 @@ export const exportToExcel = async (
 
   incomesSheet.columns = [
     { header: 'Description', key: 'name', width: 30 },
+    { header: 'Currency', key: 'currency', width: 10 },
     { header: 'USD', key: 'usd', width: 15 },
     { header: 'Date', key: 'date', width: 15 },
     { header: 'TRM', key: 'trm', width: 15 },
@@ -61,6 +64,7 @@ export const exportToExcel = async (
   filteredEntries.forEach(entry => {
     incomesSheet.addRow({
       name: entry.name,
+      currency: entry.currency || 'USD',
       usd: entry.usd,
       date: format(new Date(entry.date), APP_CONFIG.DATE_FORMAT.FULL_DATE),
       trm: entry.trm,
@@ -71,6 +75,7 @@ export const exportToExcel = async (
   const incomeRowCount = incomesSheet.rowCount;
   const totalRow = incomesSheet.addRow({
     name: 'Total',
+    currency: '',
     usd: '',
     date: '',
     trm: '',

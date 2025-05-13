@@ -152,9 +152,7 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
             defaultToPreviousMonth={true}
           />
         </div>
-
         <div className="action-buttons">
-
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -203,7 +201,8 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
               <TableHeader>
                 <TableRow>
                   <TableHead className="description-col">Description</TableHead>
-                  <TableHead className="amount-col">USD</TableHead>
+                  <TableHead className="currency-col">Currency</TableHead>
+                  <TableHead className="amount-col">Amount</TableHead>
                   <TableHead className="date-col">Date</TableHead>
                   <TableHead className="trm-col">TRM</TableHead>
                   <TableHead className="cop-col">COP</TableHead>
@@ -245,14 +244,32 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
                         </div>
                       </TableCell>
                       <TableCell>
+                        <div className="flex gap-2">
+                          <select
+                            value={entry.currency || 'USD'}
+                            onChange={e => onEntryChange(index, 'currency', e.target.value)}
+                            className="clean-input shadow-sm rounded-md"
+                          >
+                            <option value="USD">USD</option>
+                            <option value="COP">COP</option>
+                          </select>
+                        </div>
+                      </TableCell>
+                      <TableCell>
                         <div className="input-with-icon relative">
                           <div className="currency-symbol absolute left-3 top-1/2 transform -translate-y-1/2">
                             $
                           </div>
                           <Input
                             type="number"
-                            value={entry.usd || ''}
-                            onChange={e => onEntryChange(index, 'usd', Number(e.target.value) || 0)}
+                            value={entry.currency === 'USD' ? entry.usd || '' : entry.cop || ''}
+                            onChange={e =>
+                              onEntryChange(
+                                index,
+                                entry.currency === 'USD' ? 'usd' : 'cop',
+                                Number(e.target.value) || 0
+                              )
+                            }
                             className="pl-6 currency-field clean-input shadow-sm rounded-md"
                             placeholder="0.00"
                           />
@@ -381,7 +398,7 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-4">
+                    <TableCell colSpan={7} className="text-center py-4">
                       <div className="empty-state">
                         <div className="empty-icon">
                           <List size={32} />
@@ -397,7 +414,7 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
               <TableFooter>
                 {Array.isArray(entries) && entries.length > 0 && (
                   <TableRow className="total-row">
-                    <TableCell colSpan={4} className="text-right">
+                    <TableCell colSpan={5} className="text-right">
                       <strong>Total Amount:</strong>
                     </TableCell>
                     <TableCell className="text-right total-amount">

@@ -7,6 +7,7 @@ export interface RecurringItem {
 export interface IncomeEntry {
   itemId: number;
   name: string;
+  currency: 'USD' | 'COP';
   usd: number;
   date: Date;
   trm: number;

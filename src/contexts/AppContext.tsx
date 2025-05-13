@@ -78,11 +78,19 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
       setIncomeEntries(prevEntries => {
         const newEntries = [...prevEntries];
+        const entry = newEntries[entryIndex];
+
         newEntries[entryIndex] = {
-          ...newEntries[entryIndex],
+          ...entry,
           trm,
-          cop: newEntries[entryIndex].usd * trm,
         };
+
+        if (entry.currency === 'USD') {
+          newEntries[entryIndex].cop = entry.usd * trm;
+        } else {
+          newEntries[entryIndex].usd = entry.cop / trm;
+        }
+
         return newEntries;
       });
     } catch (error) {
@@ -103,9 +111,45 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         [field]: value,
       };
 
-      // If USD or TRM changed, recalculate COP
-      if (field === 'usd' || field === 'trm') {
+      if (field === 'currency') {
+        if (value === 'COP') {
+          // When switching to COP, convert USD to COP if TRM is available
+          if (newEntries[entryIndex].trm > 0) {
+            newEntries[entryIndex].cop = newEntries[entryIndex].usd * newEntries[entryIndex].trm;
+            newEntries[entryIndex].usd = 0;
+          } else {
+            newEntries[entryIndex].cop = 0;
+          }
+        } else {
+          // When switching to USD, convert COP to USD if TRM is available
+          if (newEntries[entryIndex].trm > 0) {
+            newEntries[entryIndex].usd = newEntries[entryIndex].cop / newEntries[entryIndex].trm;
+            newEntries[entryIndex].cop = 0;
+          } else {
+            newEntries[entryIndex].usd = 0;
+          }
+        }
+      } else if (
+        field === 'usd' &&
+        newEntries[entryIndex].currency === 'USD' &&
+        newEntries[entryIndex].trm > 0
+      ) {
+        // If USD changed and currency is USD, recalculate COP
         newEntries[entryIndex].cop = newEntries[entryIndex].usd * newEntries[entryIndex].trm;
+      } else if (
+        field === 'cop' &&
+        newEntries[entryIndex].currency === 'COP' &&
+        newEntries[entryIndex].trm > 0
+      ) {
+        // If COP changed and currency is COP, recalculate USD
+        newEntries[entryIndex].usd = newEntries[entryIndex].cop / newEntries[entryIndex].trm;
+      } else if (field === 'trm') {
+        // If TRM changed, recalculate based on the current currency
+        if (newEntries[entryIndex].currency === 'USD') {
+          newEntries[entryIndex].cop = newEntries[entryIndex].usd * newEntries[entryIndex].trm;
+        } else {
+          newEntries[entryIndex].usd = newEntries[entryIndex].cop / newEntries[entryIndex].trm;
+        }
       }
 
       return newEntries;
@@ -171,6 +215,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         const newEntry: IncomeEntry = {
           itemId: Date.now(),
           name: 'New Entry',
+          currency: 'USD',
           usd: 0,
           date: new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 15),
           trm: 0,
@@ -183,6 +228,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       const newEntry: IncomeEntry = {
         itemId: defaultItem.id,
         name: defaultItem.name,
+        currency: 'USD',
         usd: defaultItem.defaultUSD,
         date: new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 15),
         trm: 0,
