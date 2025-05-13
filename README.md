@@ -8,19 +8,19 @@ Track your contractor income and automate Colombian social security calculations
 ![shadcn/ui](https://img.shields.io/badge/shadcn/ui-latest-000000?style=for-the-badge)
 
 <div align="center">
-  <img src="public/logo.svg" alt="Social Security Tracker" height="180" width="180">
+  <img src="public/logo.svg" alt="Social Security Tracker" width="100">
   <h3>Your financial automation tool for contractors</h3>
 </div>
 
 ## Features
 
 - **Income Management**: Track recurring income in USD with automatic TRM conversion
-- **TRM Integration**: Auto-fetch Colombian Peso exchange rates (prevents fetching future dates)
+- **TRM Integration**: Auto-fetch Colombian Peso exchange rates
 - **Smart Calculations**: Calculate contributions using direct and presumption of costs methods
 - **Local Storage**: Store data securely in your browser with IndexedDB
 - **Excel Export**: Generate professional reports for financial records
-- **Light/Dark Mode**: Automatic theme switching based on system preferences
-- **Responsive Design**: Works on desktop, tablet, and mobile devices
+
+<img width="1384" alt="1" src="https://github.com/user-attachments/assets/82e0e10a-4c41-42b9-9ec1-0b3a870da5ea" />
 
 ## Quick Setup
 
@@ -121,4 +121,7 @@ npm run build
 
 ## License
 
-MIT License
+[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
+
+- **[MIT license](LICENSE)**
+- Copyright 2025 © Juan Alegría
