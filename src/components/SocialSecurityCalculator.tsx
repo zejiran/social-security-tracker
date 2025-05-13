@@ -69,7 +69,7 @@ const SocialSecurityCalculator: React.FC<SocialSecurityCalculatorProps> = ({
   };
 
   const [copied, setCopied] = useState(false);
-  const rawIBC = Math.round(presumption.base);
+  const rawIBC = Math.ceil(presumption.base);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(rawIBC.toString());
