@@ -159,7 +159,7 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
                           type="text"
                           value={entry.name || ''}
                           onChange={e => onEntryChange(index, 'name', e.target.value)}
-                          className="clean-input shadow-sm"
+                          className="clean-input shadow-sm rounded-md"
                           placeholder="Description"
                         />
                       </TableCell>
@@ -172,7 +172,7 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
                             type="number"
                             value={entry.usd || ''}
                             onChange={e => onEntryChange(index, 'usd', Number(e.target.value) || 0)}
-                            className="pl-6 currency-field clean-input shadow-sm"
+                            className="pl-6 currency-field clean-input shadow-sm rounded-md"
                             placeholder="0.00"
                           />
                         </div>
@@ -199,7 +199,7 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
                             placeholder="Enter TRM"
                             value={entry.trm || ''}
                             onChange={e => onEntryChange(index, 'trm', Number(e.target.value) || 0)}
-                            className="clean-input shadow-sm"
+                            className="clean-input shadow-sm rounded-md"
                           />
                         ) : (
                           <Button

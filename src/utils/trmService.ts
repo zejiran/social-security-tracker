@@ -16,6 +16,16 @@ export async function fetchTRM(date: string): Promise<number> {
       return 0;
     }
 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const requestDate = new Date(date);
+    requestDate.setHours(0, 0, 0, 0);
+
+    if (requestDate > today) {
+      console.warn('Cannot fetch TRM for future dates:', date);
+      return 0;
+    }
+
     const cachedValue = getCachedTRM(date);
     if (cachedValue !== null) {
       return cachedValue;

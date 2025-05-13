@@ -50,26 +50,24 @@ export function DatePicker({
       : format(date, dateFormat)
     : undefined;
 
-  const [calendarMonth, setCalendarMonth] = React.useState<Date | undefined>(date);
+  const [calendarMonth, setCalendarMonth] = React.useState<Date>(date || new Date());
 
   React.useEffect(() => {
-    setCalendarMonth(date);
+    if (date) {
+      setCalendarMonth(date);
+    }
   }, [date]);
 
   const handlePrevMonth = () => {
-    if (calendarMonth) {
-      const prevMonth = new Date(calendarMonth);
-      prevMonth.setMonth(prevMonth.getMonth() - 1);
-      setCalendarMonth(prevMonth);
-    }
+    const prevMonth = new Date(calendarMonth);
+    prevMonth.setMonth(prevMonth.getMonth() - 1);
+    setCalendarMonth(prevMonth);
   };
 
   const handleNextMonth = () => {
-    if (calendarMonth) {
-      const nextMonth = new Date(calendarMonth);
-      nextMonth.setMonth(nextMonth.getMonth() + 1);
-      setCalendarMonth(nextMonth);
-    }
+    const nextMonth = new Date(calendarMonth);
+    nextMonth.setMonth(nextMonth.getMonth() + 1);
+    setCalendarMonth(nextMonth);
   };
 
   return (
@@ -94,19 +92,17 @@ export function DatePicker({
             variant="ghost"
             size="sm"
             onClick={handlePrevMonth}
-            className="h-7 w-7 p-0 text-primary hover:bg-primary/10 hover:text-primary-foreground"
+            className="h-7 w-7 p-0 hover:bg-primary/10"
           >
             <span className="sr-only">Previous month</span>
             <LucideChevronsLeft />
           </Button>
-          <div className="font-bold text-sm text-primary">
-            {calendarMonth ? format(calendarMonth, 'MMMM yyyy') : ''}
-          </div>
+          <div className="font-bold text-sm">{format(calendarMonth, 'MMMM yyyy')}</div>
           <Button
             variant="ghost"
             size="sm"
             onClick={handleNextMonth}
-            className="h-7 w-7 p-0 text-primary hover:bg-primary hover:text-primary-foreground"
+            className="h-7 w-7 p-0 hover:bg-primary"
           >
             <span className="sr-only">Next month</span>
             <LucideChevronsRight />
@@ -119,20 +115,19 @@ export function DatePicker({
           month={calendarMonth}
           onMonthChange={setCalendarMonth}
           classNames={{
-            months: 'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0',
-            month: 'space-y-4',
+            months: 'flex flex-col sm:flex-row sm:space-x-4 sm:space-y-0',
             caption: 'hidden',
             nav: 'hidden',
             caption_label: 'hidden',
             table: 'w-full border-collapse space-y-1 mt-1',
             head_row: 'flex',
-            head_cell: 'text-primary/70 rounded-md w-9 font-normal text-[0.8rem]',
+            head_cell: 'text-primary rounded-md w-9 font-normal text-[0.8rem]',
             row: 'flex w-full mt-2',
             cell: 'h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20',
-            day: 'h-9 w-9 p-0 font-normal aria-selected:opacity-100 hover:bg-primary/10 focus:bg-primary/10',
-            day_selected:
-              'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground',
-            day_today: 'bg-accent text-accent-foreground',
+            day: 'h-9 w-9 p-0 font-normal aria-selected:opacity-100 hover:bg-accent rounded-md text-center focus:bg-[--background]',
+            selected:
+              'bg-[--background] hover:bg-[--background] text-primary-foreground hover:text-primary-foreground',
+            today: 'bg-accent text-accent-foreground',
           }}
         />
       </PopoverContent>
@@ -235,7 +230,9 @@ export function MonthPicker({
               size="sm"
               className={cn(
                 'h-9',
-                date && date.getMonth() === index && 'bg-primary text-primary-foreground'
+                date &&
+                  date.getMonth() === index &&
+                  'bg-[--background] hover:bg-[--background] text-primary-foreground'
               )}
               onClick={() => handleSelectMonth(index)}
             >

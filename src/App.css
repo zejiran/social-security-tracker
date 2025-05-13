@@ -1080,7 +1080,7 @@ input[type='range']::-moz-range-thumb:hover {
 }
 
 .item-amount-field {
-  width: 150px;
+  width: 15%;
   margin-right: var(--spacing-md);
 }
 
@@ -1142,9 +1142,16 @@ input[type='range']::-moz-range-thumb:hover {
 }
 
 .formula-settings {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  width: 100%;
   gap: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .formula-settings {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .formula-setting {
@@ -1152,8 +1159,11 @@ input[type='range']::-moz-range-thumb:hover {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: 0;
   transition: var(--transition-fast);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .formula-setting:hover {
@@ -1166,6 +1176,7 @@ input[type='range']::-moz-range-thumb:hover {
   color: var(--text-secondary);
   font-size: var(--text-sm);
   margin-bottom: var(--spacing-xs);
+  width: 100%;
 }
 
 .formula-value {
@@ -1173,11 +1184,13 @@ input[type='range']::-moz-range-thumb:hover {
   font-weight: 700;
   color: var(--primary);
   margin-bottom: var(--spacing-xs);
+  width: 100%;
 }
 
 .formula-description {
   font-size: var(--text-xs);
   color: var(--text-muted);
+  width: 100%;
 }
 
 .settings-footer {
@@ -1185,6 +1198,13 @@ input[type='range']::-moz-range-thumb:hover {
   margin-top: var(--spacing-lg);
   padding-top: var(--spacing-md);
   border-top: 1px solid var(--border-color);
+}
+
+/* Toast styling */
+.custom-toast {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  font-weight: 500;
 }
 
 /* App footer */
@@ -1253,8 +1273,12 @@ input[type='range']::-moz-range-thumb:hover {
 }
 
 @media (max-width: 768px) {
-  .card-body {
-    padding: var(--spacing-md);
+ .card-body {
+    padding: var(--spacing-sm);
+  }
+  
+  .formula-settings {
+    grid-template-columns: repeat(1, 1fr);
   }
 
   .table thead {
@@ -1324,6 +1348,7 @@ input[type='range']::-moz-range-thumb:hover {
     --text-secondary: #e5e7eb;
     --text-muted: #9ca3af;
     --border-color: #374151;
+    --toast-background: #1f2937;
 
     --primary: #60a5fa;
     --primary-light: #93c5fd;

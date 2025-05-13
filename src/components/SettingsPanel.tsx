@@ -33,7 +33,11 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
   includeSolidarity,
   setIncludeSolidarity,
 }) => {
-  const safeItems = Array.isArray(recurringItems) ? recurringItems : [];
+  const safeItems = React.useMemo(
+    () => (Array.isArray(recurringItems) ? recurringItems : []),
+    [recurringItems]
+  );
+
   const [draggingId, setDraggingId] = useState<number | null>(null);
   const [dragOverId, setDragOverId] = useState<number | null>(null);
 
@@ -67,15 +71,12 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
         return;
       }
 
-      // Create a new array with items in the new order
       const newItems = [...safeItems];
       const [removed] = newItems.splice(dragItemIndex, 1);
       newItems.splice(dropItemIndex, 0, removed);
 
-      // Use the reorderItems function from context
       onReorderItems(newItems);
 
-      // Reset drag states
       setDraggingId(null);
       setDragOverId(null);
     },
@@ -84,7 +85,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
 
   return (
     <div>
-      <div className="settings-intro">
+      <div className="settings-intro pt-4">
         <h3>Application Settings</h3>
         <p className="text-secondary fw-medium">
           Configure your recurring income items and calculation preferences. These settings will be
@@ -146,13 +147,13 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     value={item.name || ''}
                     onChange={e => onItemChange(item.id, 'name', e.target.value)}
                     placeholder="Item name"
-                    className="h-8 text-sm"
+                    className="h-8 text-sm rounded-md"
                   />
                 </div>
 
                 <div className="item-amount-field">
                   <div className="flex">
-                    <div className="inline-flex items-center justify-center rounded-l-md border border-r-0 border-input bg-muted/50 px-2 text-sm">
+                    <div className="inline-flex items-center justify-center rounded-l-md border border-input px-2 text-sm">
                       USD
                     </div>
                     <Input
@@ -162,7 +163,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                         onItemChange(item.id, 'defaultUSD', Number(e.target.value) || 0)
                       }
                       placeholder="Default value"
-                      className="rounded-l-none h-8 text-sm"
+                      className="h-8 border-l-0 text-sm rounded-r-md"
                     />
                   </div>
                 </div>
@@ -201,7 +202,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 <h5 className="mb-0">Default Cost Percentage</h5>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-4 text-white">
                   <div className="flex justify-between items-center">
                     <Label htmlFor="percentage-value">Percentage Value</Label>
                     <span className="text-primary font-bold">
@@ -231,7 +232,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 <h5 className="mb-0">Solidarity Contribution</h5>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-4 text-white">
                   <div className="flex items-center space-x-2">
                     <Switch
                       id="default-solidarity"
@@ -257,13 +258,13 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
             <h5 className="mb-0">Formula Settings</h5>
           </CardHeader>
           <CardContent>
-            <p className="text-secondary fw-medium">
+            <p className="text-secondary fw-medium mb-4">
               These are the configured formulas used for social security calculations.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 formula-settings">
-              <div>
-                <div className="formula-setting">
+            <div className="formula-settings">
+              <div className="formula-setting w-full">
+                <div className="flex flex-col w-full">
                   <div className="formula-label">Base Percentage</div>
                   <div className="formula-value">{APP_CONFIG.FORMULA.BASE_PERCENTAGE * 100}%</div>
                   <div className="formula-description">
@@ -271,15 +272,15 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                   </div>
                 </div>
               </div>
-              <div>
-                <div className="formula-setting">
+              <div className="formula-setting w-full">
+                <div className="flex flex-col w-full">
                   <div className="formula-label">Health Contribution</div>
                   <div className="formula-value">{APP_CONFIG.FORMULA.HEALTH_PERCENTAGE * 100}%</div>
                   <div className="formula-description">Of the calculated base amount</div>
                 </div>
               </div>
-              <div>
-                <div className="formula-setting">
+              <div className="formula-setting w-full">
+                <div className="flex flex-col w-full">
                   <div className="formula-label">Pension Contribution</div>
                   <div className="formula-value">
                     {APP_CONFIG.FORMULA.PENSION_PERCENTAGE * 100}%
@@ -287,8 +288,8 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                   <div className="formula-description">Of the calculated base amount</div>
                 </div>
               </div>
-              <div>
-                <div className="formula-setting">
+              <div className="formula-setting w-full">
+                <div className="flex flex-col w-full">
                   <div className="formula-label">Solidarity Contribution</div>
                   <div className="formula-value">
                     {APP_CONFIG.FORMULA.SOLIDARITY_PERCENTAGE * 100}%

@@ -3,6 +3,7 @@ import React, { createContext, useContext, ReactNode } from 'react';
 import { useAppState } from '../hooks/useAppState';
 import { IncomeEntry, RecurringItem } from '../types';
 import { exportToExcel } from '../utils/exportService';
+import { showFutureDateTRMWarning, showTRMFetchError } from '../utils/toastUtils';
 import { fetchTRM } from '../utils/trmService';
 
 interface AppContextType {
@@ -48,9 +49,27 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     totalCOP,
   } = useAppState();
 
-  // Update TRM for an entry
   const updateTRM = async (entryIndex: number, date: Date): Promise<void> => {
     try {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const requestDate = new Date(date);
+      requestDate.setHours(0, 0, 0, 0);
+
+      if (requestDate > today) {
+        console.warn('Cannot fetch TRM for future dates:', date);
+        showFutureDateTRMWarning();
+        setIncomeEntries(prevEntries => {
+          const newEntries = [...prevEntries];
+          newEntries[entryIndex] = {
+            ...newEntries[entryIndex],
+            trm: 0,
+          };
+          return newEntries;
+        });
+        return;
+      }
+
       const formattedDate = date.toISOString().split('T')[0];
       const trm = await fetchTRM(formattedDate);
 
@@ -65,6 +84,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       });
     } catch (error) {
       console.error('Error fetching TRM:', error);
+      showTRMFetchError();
     }
   };
 

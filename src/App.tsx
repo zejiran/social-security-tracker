@@ -1,5 +1,6 @@
 import { Calculator, DollarSign, HexagonIcon, Settings } from 'lucide-react';
 import React, { useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 import './App.css';
 import IncomeTable from './components/IncomeTable';
@@ -119,6 +120,31 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   return (
     <AppProvider>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          className: 'custom-toast',
+          style: {
+            border: '1px solid var(--border-color)',
+            padding: '12px',
+            color: 'var(--text-primary)',
+            background: 'var(--background)',
+          },
+          success: {
+            style: {
+              background: 'var(--success)',
+              color: 'white',
+            },
+          },
+          error: {
+            style: {
+              background: 'var(--danger)',
+              color: 'white',
+            },
+          },
+          duration: 4000,
+        }}
+      />
       <AppContent />
     </AppProvider>
   );
