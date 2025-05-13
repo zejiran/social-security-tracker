@@ -359,7 +359,13 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
                                 <Button
                                   variant="ghost"
                                   size="sm"
-                                  onClick={() => onEntryChange(index, 'usd', 0)}
+                                  onClick={() =>
+                                    onEntryChange(
+                                      index,
+                                      entry.currency === 'USD' ? 'usd' : 'cop',
+                                      0
+                                    )
+                                  }
                                   className="icon-button shadow-sm h-8 w-8 p-0 mr-1"
                                 >
                                   <X size={16} />

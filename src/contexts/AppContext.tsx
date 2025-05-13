@@ -129,20 +129,24 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
             newEntries[entryIndex].usd = 0;
           }
         }
-      } else if (
-        field === 'usd' &&
-        newEntries[entryIndex].currency === 'USD' &&
-        newEntries[entryIndex].trm > 0
-      ) {
-        // If USD changed and currency is USD, recalculate COP
-        newEntries[entryIndex].cop = newEntries[entryIndex].usd * newEntries[entryIndex].trm;
-      } else if (
-        field === 'cop' &&
-        newEntries[entryIndex].currency === 'COP' &&
-        newEntries[entryIndex].trm > 0
-      ) {
-        // If COP changed and currency is COP, recalculate USD
-        newEntries[entryIndex].usd = newEntries[entryIndex].cop / newEntries[entryIndex].trm;
+      } else if (field === 'usd') {
+        // If USD value is reset to 0, also reset COP
+        if (value === 0 && newEntries[entryIndex].currency === 'USD') {
+          newEntries[entryIndex].cop = 0;
+        }
+        // If USD changed and currency is USD and TRM exists, recalculate COP
+        else if (newEntries[entryIndex].currency === 'USD' && newEntries[entryIndex].trm > 0) {
+          newEntries[entryIndex].cop = newEntries[entryIndex].usd * newEntries[entryIndex].trm;
+        }
+      } else if (field === 'cop') {
+        // If COP value is reset to 0, also reset USD
+        if (value === 0 && newEntries[entryIndex].currency === 'COP') {
+          newEntries[entryIndex].usd = 0;
+        }
+        // If COP changed and currency is COP and TRM exists, recalculate USD
+        else if (newEntries[entryIndex].currency === 'COP' && newEntries[entryIndex].trm > 0) {
+          newEntries[entryIndex].usd = newEntries[entryIndex].cop / newEntries[entryIndex].trm;
+        }
       } else if (field === 'trm') {
         // If TRM changed, recalculate based on the current currency
         if (newEntries[entryIndex].currency === 'USD') {
