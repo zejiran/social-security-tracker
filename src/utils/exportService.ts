@@ -28,8 +28,7 @@ export const exportToExcel = async (
   const filteredEntries = incomeEntries.filter(entry => {
     const hasValue = entry.usd !== undefined && entry.usd !== null && entry.usd !== 0;
     const hasDate = entry.date !== undefined && entry.date !== null;
-    const isValidDate = entry.date instanceof Date && !isNaN(entry.date.getTime());
-    return hasValue && hasDate && isValidDate;
+    return hasValue && hasDate;
   });
 
   // Create a new workbook and add two worksheets
@@ -70,10 +69,7 @@ export const exportToExcel = async (
     incomesSheet.addRow({
       name: entry.name,
       usd: entry.usd,
-      date:
-        entry.date instanceof Date
-          ? format(entry.date, APP_CONFIG.DATE_FORMAT.FULL_DATE)
-          : entry.date,
+      date: format(new Date(entry.date), APP_CONFIG.DATE_FORMAT.FULL_DATE),
       trm: entry.trm,
       cop: entry.cop,
     });
