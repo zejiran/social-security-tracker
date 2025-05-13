@@ -23,8 +23,12 @@ const AppContent: React.FC = () => {
     handleEntryChange,
     handleRecurringItemChange,
     reorderRecurringItems,
+    reorderIncomeEntries,
+
     addRecurringItem,
     removeRecurringItem,
+    addIncomeEntry,
+    removeIncomeEntry,
     setCostosPercent,
     setIncludeSolidarity,
     updateTRM,
@@ -69,6 +73,9 @@ const AppContent: React.FC = () => {
             onTRMFetch={updateTRM}
             onExport={exportCurrentMonth}
             totalCOP={totalCOP}
+            onReorderEntries={reorderIncomeEntries}
+            onAddEntry={addIncomeEntry}
+            onRemoveEntry={removeIncomeEntry}
           />
         </TabsContent>
 

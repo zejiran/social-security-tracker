@@ -120,7 +120,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                   <path d="M13 2v7h7"></path>
                 </svg>
               </div>
-              <p>No recurring items defined. Add your first item below.</p>
+              <p>
+                No recurring income items defined yet. Click the button below to add your first
+                item.
+              </p>
             </div>
           ) : (
             safeItems.map(item => (

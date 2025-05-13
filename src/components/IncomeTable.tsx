@@ -1,4 +1,14 @@
-import { Download, RefreshCw, X, List, Edit, Check } from 'lucide-react';
+import {
+  Download,
+  RefreshCw,
+  X,
+  List,
+  Edit,
+  Check,
+  Plus,
+  GripVertical,
+  Trash2,
+} from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 
 import { Badge } from '../components/ui/badge';
@@ -26,6 +36,9 @@ interface IncomeTableProps {
   onTRMFetch: (entryIndex: number, date: Date) => Promise<void>;
   onExport: () => void;
   totalCOP: number;
+  onReorderEntries?: (newOrder: IncomeEntry[]) => void;
+  onAddEntry?: () => void;
+  onRemoveEntry?: (entryIndex: number) => void;
 }
 
 const IncomeTable: React.FC<IncomeTableProps> = ({
@@ -36,9 +49,14 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
   onTRMFetch,
   onExport,
   totalCOP,
+  onReorderEntries,
+  onAddEntry,
+  onRemoveEntry,
 }) => {
   const [isLoading, setIsLoading] = useState<number | null>(null);
   const [editingTRM, setEditingTRM] = useState<number | null>(null);
+  const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
   const ensureDate = (dateValue: Date | string | undefined): Date => {
     if (!dateValue) {
@@ -91,6 +109,37 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
     });
   }, [entries]);
 
+  const handleDragStart = (index: number) => {
+    setDraggingIndex(index);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLTableRowElement>) => {
+    e.preventDefault();
+  };
+
+  const handleDragEnter = (index: number) => {
+    setDragOverIndex(index);
+  };
+
+  const handleDragEnd = () => {
+    setDraggingIndex(null);
+    setDragOverIndex(null);
+  };
+
+  const handleDrop = (targetIndex: number) => {
+    if (draggingIndex === null || draggingIndex === targetIndex || !onReorderEntries) {
+      return;
+    }
+
+    const newEntries = [...entries];
+    const [removed] = newEntries.splice(draggingIndex, 1);
+    newEntries.splice(targetIndex, 0, removed);
+
+    onReorderEntries(newEntries);
+    setDraggingIndex(null);
+    setDragOverIndex(null);
+  };
+
   return (
     <div className="income-dashboard fade-in">
       <div className="header-actions-bar mb-4">
@@ -105,6 +154,7 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
         </div>
 
         <div className="action-buttons">
+
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -127,7 +177,23 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
             <h4 className="mb-0 font-bold">
               Income for <span className="text-primary">{getMonthName(currentMonth)}</span>
             </h4>
-            <Badge className="income-badge">{entries.length} Items</Badge>
+            <div className="flex items-center">
+              <Badge className="income-badge mr-2">{entries.length} Items</Badge>
+              {onAddEntry && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button onClick={onAddEntry} variant="outline" size="sm" className="h-7 px-2">
+                        <Plus size={14} />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Add new entry</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
+            </div>
           </div>
         </CardHeader>
 
@@ -153,16 +219,30 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
                         opacity: 0,
                         transform: 'translateY(10px)',
                         transition: 'all 0.3s ease-out',
+                        borderTop: dragOverIndex === index ? '2px solid var(--primary)' : undefined,
                       }}
+                      draggable={!!onReorderEntries}
+                      onDragStart={() => handleDragStart(index)}
+                      onDragOver={handleDragOver}
+                      onDragEnter={() => handleDragEnter(index)}
+                      onDragEnd={handleDragEnd}
+                      onDrop={() => handleDrop(index)}
                     >
                       <TableCell>
-                        <Input
-                          type="text"
-                          value={entry.name || ''}
-                          onChange={e => onEntryChange(index, 'name', e.target.value)}
-                          className="clean-input shadow-sm rounded-md"
-                          placeholder="Description"
-                        />
+                        <div className="flex items-center">
+                          {onReorderEntries && (
+                            <div className="mr-2 cursor-grab">
+                              <GripVertical size={16} />
+                            </div>
+                          )}
+                          <Input
+                            type="text"
+                            value={entry.name || ''}
+                            onChange={e => onEntryChange(index, 'name', e.target.value)}
+                            className="clean-input shadow-sm rounded-md"
+                            placeholder="Description"
+                          />
+                        </div>
                       </TableCell>
                       <TableCell>
                         <div className="input-with-icon relative">
@@ -255,7 +335,7 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
                         </div>
                       </TableCell>
                       <TableCell className="text-center">
-                        <div className="action-buttons">
+                        <div className="action-buttons flex">
                           <TooltipProvider>
                             <Tooltip>
                               <TooltipTrigger asChild>
@@ -263,7 +343,7 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
                                   variant="ghost"
                                   size="sm"
                                   onClick={() => onEntryChange(index, 'usd', 0)}
-                                  className="icon-button shadow-sm h-8 w-8 p-0"
+                                  className="icon-button shadow-sm h-8 w-8 p-0 mr-1"
                                 >
                                   <X size={16} />
                                   <span className="sr-only">Reset value</span>
@@ -274,6 +354,27 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
                               </TooltipContent>
                             </Tooltip>
                           </TooltipProvider>
+
+                          {onRemoveEntry && (
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => onRemoveEntry(index)}
+                                    className="icon-button shadow-sm h-8 w-8 p-0"
+                                  >
+                                    <Trash2 size={16} />
+                                    <span className="sr-only">Delete entry</span>
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>Delete entry</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          )}
                         </div>
                       </TableCell>
                     </TableRow>
@@ -312,10 +413,6 @@ const IncomeTable: React.FC<IncomeTableProps> = ({
           <div className="income-info-box shadow-md mt-4">
             <div className="info-icon">ⓘ</div>
             <div className="info-text">
-              <p>
-                To add new income items or modify recurring items, go to the{' '}
-                <strong>Settings</strong> tab.
-              </p>
               <p className="mb-0">
                 TRM values are fetched automatically from{' '}
                 <span className="text-primary fw-medium">trm-colombia.vercel.app</span> API on the

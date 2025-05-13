@@ -39,7 +39,28 @@ export const useAppState = () => {
     );
 
     if (Array.isArray(savedEntries) && savedEntries.length > 0) {
-      setIncomeEntries(savedEntries);
+      const updatedEntries = savedEntries.map(entry => {
+        const matchingItem = recurringItems.find(item => item.id === entry.itemId);
+        if (matchingItem && entry.name !== matchingItem.name) {
+          return { ...entry, name: matchingItem.name };
+        }
+        return entry;
+      });
+
+      recurringItems.forEach(item => {
+        if (!updatedEntries.some(entry => entry.itemId === item.id)) {
+          updatedEntries.push({
+            itemId: item.id,
+            name: item.name,
+            usd: item.defaultUSD,
+            date: new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 15),
+            trm: 0,
+            cop: 0,
+          });
+        }
+      });
+
+      setIncomeEntries(updatedEntries);
     } else {
       const newEntries: IncomeEntry[] = recurringItems.map(item => ({
         itemId: item.id,

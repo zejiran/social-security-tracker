@@ -24,8 +24,11 @@ interface AppContextType {
     value: string | number | boolean
   ) => void;
   reorderRecurringItems: (newOrder: RecurringItem[]) => void;
+  reorderIncomeEntries: (newOrder: IncomeEntry[]) => void;
   addRecurringItem: () => void;
   removeRecurringItem: (itemId: number) => void;
+  addIncomeEntry: () => void;
+  removeIncomeEntry: (entryIndex: number) => void;
   setCostosPercent: (value: number) => void;
   setIncludeSolidarity: (value: boolean) => void;
   updateTRM: (entryIndex: number, date: Date) => Promise<void>;
@@ -156,6 +159,47 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   };
 
+  const reorderIncomeEntries = (newEntries: IncomeEntry[]): void => {
+    if (Array.isArray(newEntries) && newEntries.length > 0) {
+      setIncomeEntries(newEntries);
+    }
+  };
+
+  const addIncomeEntry = (): void => {
+    setIncomeEntries(prevEntries => {
+      if (!recurringItems || recurringItems.length === 0) {
+        const newEntry: IncomeEntry = {
+          itemId: Date.now(),
+          name: 'New Entry',
+          usd: 0,
+          date: new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 15),
+          trm: 0,
+          cop: 0,
+        };
+        return [...prevEntries, newEntry];
+      }
+
+      const defaultItem = recurringItems[0];
+      const newEntry: IncomeEntry = {
+        itemId: defaultItem.id,
+        name: defaultItem.name,
+        usd: defaultItem.defaultUSD,
+        date: new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 15),
+        trm: 0,
+        cop: 0,
+      };
+      return [...prevEntries, newEntry];
+    });
+  };
+
+  const removeIncomeEntry = (entryIndex: number): void => {
+    setIncomeEntries(prevEntries => {
+      const newEntries = [...prevEntries];
+      newEntries.splice(entryIndex, 1);
+      return newEntries;
+    });
+  };
+
   const value = {
     recurringItems,
     currentMonth,
@@ -168,8 +212,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     handleEntryChange,
     handleRecurringItemChange,
     reorderRecurringItems,
+    reorderIncomeEntries,
     addRecurringItem,
     removeRecurringItem,
+    addIncomeEntry,
+    removeIncomeEntry,
     setCostosPercent,
     setIncludeSolidarity,
     updateTRM,
