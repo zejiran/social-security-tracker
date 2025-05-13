@@ -133,8 +133,6 @@ h6 {
   color: #ffffff;
 }
 
-/* Datepicker styles moved to datepicker.module.css */
-
 .calculation-method {
   background-color: #1f2937;
   border-radius: var(--border-radius);

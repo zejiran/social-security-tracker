@@ -1,6 +1,5 @@
 import localforage from 'localforage';
 
-// Initialize localforage
 localforage.config({
   name: 'social-security-tracker',
   storeName: 'tracker_data',
@@ -15,10 +14,8 @@ localforage.config({
  */
 export const saveToLocalStorage = <T>(key: string, data: T): void => {
   try {
-    // Use localStorage as immediate backup
     localStorage.setItem(key, JSON.stringify(data));
 
-    // Also save to localforage for future retrieval
     localforage.setItem(key, data).catch(error => {
       console.error('Error saving to localforage:', error);
     });
@@ -36,7 +33,6 @@ export const saveToLocalStorage = <T>(key: string, data: T): void => {
  */
 export const loadFromLocalStorage = <T>(key: string): T | null => {
   try {
-    // Get from localStorage (synchronous)
     const item = localStorage.getItem(key);
 
     if (item) {

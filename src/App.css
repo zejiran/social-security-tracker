@@ -476,14 +476,11 @@ input[type='range']::-moz-range-thumb:hover {
   padding-bottom: var(--spacing-lg);
 }
 
-/* Datepicker styles moved to datepicker.module.css */
-
 .date-field {
   min-width: 150px;
   width: 100%;
 }
 
-/* Special fields */
 .currency-field {
   font-family: 'JetBrains Mono', monospace;
   text-align: right;
@@ -496,7 +493,6 @@ input[type='range']::-moz-range-thumb:hover {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Custom Badge */
 .badge {
   border-radius: var(--radius-full);
   padding: 0.35em 0.85em;
@@ -510,7 +506,6 @@ input[type='range']::-moz-range-thumb:hover {
   border-radius: var(--radius-full);
 }
 
-/* Calculation sections */
 .calculation-method {
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -618,7 +613,6 @@ input[type='range']::-moz-range-thumb:hover {
   font-size: 0.85em;
 }
 
-/* Enhanced Calculator styles */
 .calculator-container {
   position: relative;
 }
@@ -710,7 +704,6 @@ input[type='range']::-moz-range-thumb:hover {
   width: 2.5rem;
 }
 
-/* Method comparison */
 .method-comparison {
   display: flex;
   gap: var(--spacing-md);
@@ -753,7 +746,6 @@ input[type='range']::-moz-range-thumb:hover {
   color: var(--text-secondary);
 }
 
-/* Contributions list */
 .contributions-list {
   list-style-type: none;
   padding: 0;
@@ -778,7 +770,6 @@ input[type='range']::-moz-range-thumb:hover {
   box-shadow: var(--shadow-md);
 }
 
-/* Note with icon */
 .rounded-note {
   display: flex;
   align-items: flex-start;
@@ -801,7 +792,6 @@ input[type='range']::-moz-range-thumb:hover {
   flex: 1;
 }
 
-/* Enhanced Income Table */
 .income-dashboard {
   position: relative;
 }
@@ -828,7 +818,6 @@ input[type='range']::-moz-range-thumb:hover {
   box-shadow: var(--shadow-md);
 }
 
-/* Calendar icon styling */
 .calendar-icon {
   color: var(--primary);
   margin-right: var(--spacing-md);
@@ -1009,7 +998,6 @@ input[type='range']::-moz-range-thumb:hover {
   margin-bottom: 0;
 }
 
-/* Settings Panel Enhancements */
 .settings-container {
   max-width: 1000px;
   margin: 0 auto;
@@ -1199,14 +1187,12 @@ input[type='range']::-moz-range-thumb:hover {
   border-top: 1px solid var(--border-color);
 }
 
-/* Toast styling */
 .custom-toast {
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   font-weight: 500;
 }
 
-/* App footer */
 .app-footer {
   margin-top: var(--spacing-xxl);
   padding-top: var(--spacing-lg);
@@ -1513,24 +1499,4 @@ input:-webkit-autofill:focus {
 }
 .shadow-glow {
   box-shadow: var(--shadow-glow) !important;
-}
-
-/* Print styles */
-@media print {
-  body {
-    background-color: white;
-    color: black;
-    font-size: 12pt;
-  }
-
-  .card {
-    box-shadow: none !important;
-    border: 1px solid #ddd !important;
-  }
-
-  .app-header,
-  .nav-tabs,
-  .btn {
-    display: none !important;
-  }
 }

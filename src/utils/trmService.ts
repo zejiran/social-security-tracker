@@ -37,7 +37,6 @@ export async function fetchTRM(date: string): Promise<number> {
       timeout: 10000,
     });
 
-    // Check if the response is successful
     if (!response.data || !response.data.data || !response.data.data.success) {
       console.error('Failed to fetch TRM from API:', response.data);
       return 0;
@@ -50,14 +49,11 @@ export async function fetchTRM(date: string): Promise<number> {
       return 0;
     }
 
-    // Cache the value
     cacheTRM(date, trmValue);
 
     return trmValue;
   } catch (error) {
     console.error('Error fetching TRM:', error instanceof Error ? error.message : error);
-
-    // Return 0 to indicate failure and allow manual entry
     return 0;
   }
 }

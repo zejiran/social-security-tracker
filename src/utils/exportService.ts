@@ -24,33 +24,28 @@ export const exportToExcel = async (
   includeSolidarity: boolean,
   monthName: string
 ): Promise<void> => {
-  // Filter out entries with undefined, null or empty value or date
   const filteredEntries = incomeEntries.filter(entry => {
     const hasValue = entry.usd !== undefined && entry.usd !== null && entry.usd !== 0;
     const hasDate = entry.date !== undefined && entry.date !== null;
     return hasValue && hasDate;
   });
 
-  // Create a new workbook and add two worksheets
   const workbook = new ExcelJS.Workbook();
   const incomesSheet = workbook.addWorksheet('Ingresos');
   const socialSecuritySheet = workbook.addWorksheet('Social Security');
 
-  // Set up header styles
   const headerStyle = {
     font: { bold: true, color: { argb: 'FFFFFFFF' } },
     fill: { type: 'pattern', pattern: 'solid' as const, fgColor: { argb: 'FF0066CC' } },
     alignment: { horizontal: 'center' as const },
   };
 
-  // Set up the currency format
   const currencyFormat = '#,##0';
 
   // =======================================================
   // Ingresos Sheet
   // =======================================================
 
-  // Set headers for the Ingresos sheet
   incomesSheet.columns = [
     { header: 'Description', key: 'name', width: 30 },
     { header: 'USD', key: 'usd', width: 15 },
@@ -59,12 +54,10 @@ export const exportToExcel = async (
     { header: 'COP', key: 'cop', width: 20 },
   ];
 
-  // Apply header styles
   incomesSheet.getRow(1).eachCell(cell => {
     Object.assign(cell.style, headerStyle);
   });
 
-  // Add the filtered income entries to the sheet
   filteredEntries.forEach(entry => {
     incomesSheet.addRow({
       name: entry.name,
@@ -75,7 +68,6 @@ export const exportToExcel = async (
     });
   });
 
-  // Add a total row
   const incomeRowCount = incomesSheet.rowCount;
   const totalRow = incomesSheet.addRow({
     name: 'Total',
@@ -85,7 +77,6 @@ export const exportToExcel = async (
     cop: totalCOP,
   });
 
-  // Format the total row
   totalRow.font = { bold: true };
   if (totalRow.getCell('name').alignment) {
     totalRow.getCell('name').alignment.horizontal = 'right';
@@ -93,7 +84,6 @@ export const exportToExcel = async (
     totalRow.getCell('name').alignment = { horizontal: 'right' };
   }
 
-  // Format currency columns
   for (let i = 2; i <= incomeRowCount + 1; i++) {
     const row = incomesSheet.getRow(i);
     row.getCell('usd').numFmt = currencyFormat;
@@ -105,7 +95,6 @@ export const exportToExcel = async (
   // Social Security Sheet
   // =======================================================
 
-  // Add title and income information
   socialSecuritySheet.mergeCells('A1:E1');
   socialSecuritySheet.getCell('A1').value = `Social Security Calculation - ${monthName}`;
   socialSecuritySheet.getCell('A1').font = { bold: true, size: 16 };
@@ -117,7 +106,6 @@ export const exportToExcel = async (
   socialSecuritySheet.addRow(['Include Solidarity', includeSolidarity ? 'Yes' : 'No']);
   socialSecuritySheet.addRow([]);
 
-  // Format the basic info cells
   for (let i = 3; i <= 5; i++) {
     socialSecuritySheet.getRow(i).getCell(1).font = { bold: true };
     if (i === 3) {
@@ -125,10 +113,8 @@ export const exportToExcel = async (
     }
   }
 
-  // Calculate using the calculations utility
   const { direct, presumption } = calculateBothMethods(totalCOP, costosPercent, includeSolidarity);
 
-  // Add headers for calculation tables
   const headerRow = socialSecuritySheet.addRow([
     'Calculation Type',
     'Direct Method',
@@ -190,7 +176,6 @@ export const exportToExcel = async (
 
   totalCalcRow.font = { bold: true };
 
-  // Format the calculation table
   const lastRowNum = socialSecuritySheet.rowCount;
   for (let i = 7; i <= lastRowNum; i++) {
     const row = socialSecuritySheet.getRow(i);
@@ -199,20 +184,17 @@ export const exportToExcel = async (
     row.getCell(5).numFmt = currencyFormat;
   }
 
-  // Set column widths
   socialSecuritySheet.getColumn('A').width = 20;
   socialSecuritySheet.getColumn('B').width = 30;
   socialSecuritySheet.getColumn('C').width = 20;
   socialSecuritySheet.getColumn('D').width = 30;
   socialSecuritySheet.getColumn('E').width = 20;
 
-  // Generate the Excel file
   const buffer = await workbook.xlsx.writeBuffer();
   const blob = new Blob([buffer], {
     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   });
 
-  // Save the file with sanitized month name
   const safeMonthName = monthName.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '');
   saveAs(blob, `Social_Security_${safeMonthName}.xlsx`);
 };

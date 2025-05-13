@@ -88,7 +88,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   };
 
-  // Update entry field
   const handleEntryChange = (
     entryIndex: number,
     field: string,
@@ -110,7 +109,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     });
   };
 
-  // Update recurring item
   const handleRecurringItemChange = (
     itemId: number,
     field: string,
@@ -127,7 +125,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     });
   };
 
-  // Add new recurring item
   const addRecurringItem = (): void => {
     setRecurringItems(prevItems => {
       const items = Array.isArray(prevItems) ? prevItems : [];
@@ -141,7 +138,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     });
   };
 
-  // Remove recurring item
   const removeRecurringItem = (itemId: number): void => {
     setRecurringItems(prevItems => {
       const items = Array.isArray(prevItems) ? prevItems : [];
@@ -149,7 +145,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     });
   };
 
-  // Export current data to Excel
   const exportCurrentMonth = (): void => {
     const monthName = currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
     exportToExcel(incomeEntries, totalCOP, costosPercent, includeSolidarity, monthName);

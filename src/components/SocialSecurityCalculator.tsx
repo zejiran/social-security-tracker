@@ -293,7 +293,6 @@ const SocialSecurityCalculator: React.FC<SocialSecurityCalculatorProps> = ({
         </div>
       </div>
 
-      {/* Comparison Table */}
       <div className="method-comparison-table">
         <h6 className="comparison-table-header">Methods Comparison</h6>
         <div className="table-responsive">
