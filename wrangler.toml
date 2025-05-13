@@ -1,0 +1,19 @@
+name = "social-security-tracker"
+main = "./"
+compatibility_date = "2023-12-01"
+compatibility_flags = [ "nodejs_compat" ]
+
+[site]
+bucket = "./dist"
+
+[build]
+command = "npm run build"
+
+[env.production]
+workers_dev = false
+
+[env.staging]
+workers_dev = true
+
+[triggers]
+crons = []

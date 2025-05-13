@@ -29,7 +29,7 @@ Track your contractor income and automate Colombian social security calculations
 npm install
 
 # Start development server
-npm start
+npm dev
 ```
 
 ## Usage
