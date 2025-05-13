@@ -1,20 +1,19 @@
-/* Modern CSS Variables */
 :root {
   /* Main colors */
-  --primary: #3b82f6;
-  --primary-light: #60a5fa;
-  --primary-dark: #2563eb;
-  --secondary: #10b981;
-  --secondary-light: #34d399;
-  --secondary-dark: #059669;
+  --primary: #60a5fa;
+  --primary-light: #93c5fd;
+  --primary-dark: #3b82f6;
+  --secondary: #34d399;
+  --secondary-light: #6ee7b7;
+  --secondary-dark: #10b981;
 
   /* Neutral colors */
-  --background: #f9fafb;
-  --card-bg: #ffffff;
-  --text-primary: #111827;
-  --text-secondary: #374151;
-  --text-muted: #6b7280;
-  --border-color: #e5e7eb;
+  --background: #111827;
+  --card-bg: #1f2937;
+  --text-primary: #ffffff;
+  --text-secondary: #e5e7eb;
+  --text-muted: #9ca3af;
+  --border-color: #374151;
 
   /* Status colors */
   --success: #4caf50;
@@ -23,11 +22,11 @@
   --info: #2196f3;
 
   /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --shadow-intense: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-  --shadow-glow: 0 0 15px rgba(59, 130, 246, 0.3);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+  --shadow-intense: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+  --shadow-glow: 0 0 15px rgba(96, 165, 250, 0.3);
 
   /* Spacing */
   --spacing-xs: 0.25rem;
@@ -1273,10 +1272,10 @@ input[type='range']::-moz-range-thumb:hover {
 }
 
 @media (max-width: 768px) {
- .card-body {
+  .card-body {
     padding: var(--spacing-sm);
   }
-  
+
   .formula-settings {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -1339,127 +1338,106 @@ input[type='range']::-moz-range-thumb:hover {
   }
 }
 
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #111827;
-    --card-bg: #1f2937;
-    --text-primary: #ffffff;
-    --text-secondary: #e5e7eb;
-    --text-muted: #9ca3af;
-    --border-color: #374151;
-    --toast-background: #1f2937;
+body {
+  background-color: var(--background);
+}
 
-    --primary: #60a5fa;
-    --primary-light: #93c5fd;
-    --primary-dark: #3b82f6;
-    --secondary: #34d399;
-    --secondary-light: #6ee7b7;
-    --secondary-dark: #10b981;
-    --shadow-glow: 0 0 15px rgba(96, 165, 250, 0.3);
-  }
+.card,
+.table,
+.method-box,
+.contributions-list li,
+.rounded-note {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+}
 
-  body {
-    background-color: var(--background);
-  }
+.card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
 
-  .card,
-  .table,
-  .method-box,
-  .contributions-list li,
-  .rounded-note {
-    background-color: var(--card-bg);
-    border-color: var(--border-color);
-  }
+.card-header,
+.table thead th,
+.settings-card-header {
+  background-color: rgba(96, 165, 250, 0.1);
+}
 
-  .card {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  }
+.btn-outline-primary {
+  border-color: var(--primary);
+  color: var(--primary);
+}
 
-  .card-header,
-  .table thead th,
-  .settings-card-header {
-    background-color: rgba(96, 165, 250, 0.1);
-  }
+.calculation-method .card-header {
+  background-color: rgba(96, 165, 250, 0.1);
+}
 
-  .btn-outline-primary {
-    border-color: var(--primary);
-    color: var(--primary);
-  }
+.calculation-total {
+  background-color: rgba(74, 222, 128, 0.1);
+}
 
-  .calculation-method .card-header {
-    background-color: rgba(96, 165, 250, 0.1);
-  }
+.formula-explanation {
+  background-color: rgba(96, 165, 250, 0.1);
+}
 
-  .calculation-total {
-    background-color: rgba(74, 222, 128, 0.1);
-  }
+.formula-explanation code {
+  background-color: rgba(96, 165, 250, 0.2);
+  color: var(--primary-light);
+}
 
-  .formula-explanation {
-    background-color: rgba(96, 165, 250, 0.1);
-  }
+.month-selector {
+  background-color: var(--card-bg);
+}
 
-  .formula-explanation code {
-    background-color: rgba(96, 165, 250, 0.2);
-    color: var(--primary-light);
-  }
+.month-picker {
+  color: var(--text-primary);
+}
 
-  .month-selector {
-    background-color: var(--card-bg);
-  }
+.clean-input:focus {
+  background-color: rgba(96, 165, 250, 0.1);
+}
 
-  .month-picker {
-    color: var(--text-primary);
-  }
+.icon-button:hover {
+  background-color: rgba(239, 68, 68, 0.2);
+}
 
-  .clean-input:focus {
-    background-color: rgba(96, 165, 250, 0.1);
-  }
+.income-info-box {
+  background-color: rgba(96, 165, 250, 0.1);
+}
 
-  .icon-button:hover {
-    background-color: rgba(239, 68, 68, 0.2);
-  }
+.recurring-item-row {
+  background-color: var(--card-bg);
+}
 
-  .income-info-box {
-    background-color: rgba(96, 165, 250, 0.1);
-  }
+.summary-banner {
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+}
 
-  .recurring-item-row {
-    background-color: var(--card-bg);
-  }
+input[type='range'] {
+  background: linear-gradient(
+    to right,
+    var(--primary) 0%,
+    var(--primary) 50%,
+    #4b5563 50%,
+    #4b5563 100%
+  );
+}
 
-  .summary-banner {
-    background: linear-gradient(135deg, #3b82f6, #1e40af);
-  }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text-primary);
+  -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
 
-  input[type='range'] {
-    background: linear-gradient(
-      to right,
-      var(--primary) 0%,
-      var(--primary) 50%,
-      #4b5563 50%,
-      #4b5563 100%
-    );
-  }
+.form-control {
+  color: var(--text-primary);
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+}
 
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus {
-    -webkit-text-fill-color: var(--text-primary);
-    -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset;
-    transition: background-color 5000s ease-in-out 0s;
-  }
-
-  .form-control {
-    color: var(--text-primary);
-    background-color: var(--card-bg);
-    border-color: var(--border-color);
-  }
-
-  .form-control:focus {
-    background-color: rgba(96, 165, 250, 0.05);
-    color: var(--text-primary);
-  }
+.form-control:focus {
+  background-color: rgba(96, 165, 250, 0.05);
+  color: var(--text-primary);
 }
 
 /* Utilities */

@@ -10,6 +10,8 @@ import { Button } from './button';
 import { Calendar } from './calendar';
 import { Popover, PopoverContent, PopoverTrigger } from './popover';
 
+import './datepicker.css';
+
 export interface DatePickerProps {
   value?: Date;
   onChange?: (date?: Date) => void;
@@ -86,8 +88,8 @@ export function DatePicker({
           {formattedDate || <span>{placeholder}</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0 bg-white" align="start">
-        <div className="flex items-center justify-between px-3 py-2 bg-muted/20">
+      <PopoverContent className="w-auto p-0 bg-card" align="start">
+        <div className="flex items-center justify-between px-3 py-2 bg-secondary/20">
           <Button
             variant="ghost"
             size="sm"
@@ -102,7 +104,7 @@ export function DatePicker({
             variant="ghost"
             size="sm"
             onClick={handleNextMonth}
-            className="h-7 w-7 p-0 hover:bg-primary"
+            className="h-7 w-7 p-0 hover:bg-primary/10"
           >
             <span className="sr-only">Next month</span>
             <LucideChevronsRight />
@@ -121,13 +123,13 @@ export function DatePicker({
             caption_label: 'hidden',
             table: 'w-full border-collapse space-y-1 mt-1',
             head_row: 'flex',
-            head_cell: 'text-primary rounded-md w-9 font-normal text-[0.8rem]',
+            head_cell: 'text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]',
             row: 'flex w-full mt-2',
             cell: 'h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20',
-            day: 'h-9 w-9 p-0 font-normal aria-selected:opacity-100 hover:bg-accent rounded-md text-center focus:bg-[--background]',
+            day: 'h-9 w-9 p-0 font-normal aria-selected:opacity-100 hover:bg-secondary/30 rounded-md text-center focus:bg-primary',
             selected:
-              'bg-[--background] hover:bg-[--background] text-primary-foreground hover:text-primary-foreground',
-            today: 'bg-accent text-accent-foreground',
+              'bg-primary hover:bg-primary text-primary-foreground hover:text-primary-foreground',
+            today: 'bg-secondary/20 text-foreground',
           }}
         />
       </PopoverContent>
@@ -216,11 +218,17 @@ export function MonthPicker({
           {formattedDate}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-4 bg-white" align="start">
+      <PopoverContent className="w-auto p-4 bg-card" align="start">
         <div className="flex justify-between items-center mb-3">
-          <LucideChevronsLeft onClick={() => handleSelectYear(-1)} />
+          <LucideChevronsLeft
+            className="cursor-pointer hover:text-primary"
+            onClick={() => handleSelectYear(-1)}
+          />
           <div className="font-medium">{date ? date.getFullYear() : new Date().getFullYear()}</div>
-          <LucideChevronsRight onClick={() => handleSelectYear(1)} />
+          <LucideChevronsRight
+            className="cursor-pointer hover:text-primary"
+            onClick={() => handleSelectYear(1)}
+          />
         </div>
         <div className="grid grid-cols-3 gap-2">
           {months.map((month, index) => (
@@ -232,7 +240,7 @@ export function MonthPicker({
                 'h-9',
                 date &&
                   date.getMonth() === index &&
-                  'bg-[--background] hover:bg-[--background] text-primary-foreground'
+                  'bg-primary hover:bg-primary text-primary-foreground'
               )}
               onClick={() => handleSelectMonth(index)}
             >

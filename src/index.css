@@ -1,18 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --primary: #3b82f6;
-  --primary-hover: #2563eb;
+  --primary: #60a5fa;
+  --primary-hover: #93c5fd;
   --secondary: #10b981;
   --success: #10b981;
   --danger: #ef4444;
   --warning: #f59e0b;
-  --info: #3b82f6;
-  --light: #f9fafb;
-  --dark: #111827;
-  --border-color: #e5e7eb;
-  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --info: #60a5fa;
+  --light: #1f2937;
+  --dark: #e5e7eb;
+  --border-color: #374151;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+  --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
   --transition: all 0.2s ease;
   --border-radius: 0.5rem;
 }
@@ -34,19 +34,19 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f9fafb;
-  color: #111827;
+  background-color: #111827;
+  color: #ffffff;
   line-height: 1.6;
   letter-spacing: -0.01em;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-  background-color: #f1f5f9;
+  background-color: #1f2937;
   padding: 0.2em 0.4em;
   border-radius: 0.25rem;
   font-size: 85%;
-  color: #2563eb;
+  color: #93c5fd;
   transition: var(--transition);
 }
 
@@ -63,7 +63,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #111827;
+  color: #ffffff;
   font-weight: 700;
   margin-bottom: 1rem;
   letter-spacing: -0.025em;
@@ -76,16 +76,19 @@ h6 {
   padding: 0.65rem 1rem;
   transition: var(--transition);
   font-size: 0.95rem;
+  background-color: #1f2937;
+  color: #ffffff;
 }
 
 .form-control:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25);
   outline: none;
+  background-color: #1f2937;
 }
 
 .table {
-  background-color: white;
+  background-color: #1f2937;
   border-radius: var(--border-radius);
   overflow: hidden;
   box-shadow: var(--card-shadow);
@@ -95,19 +98,21 @@ h6 {
 }
 
 .table th {
-  background-color: #f9fafb;
+  background-color: #111827;
   font-weight: 600;
   padding: 1rem;
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.05em;
-  border-bottom: 2px solid #e5e7eb;
+  border-bottom: 2px solid #374151;
+  color: #ffffff;
 }
 
 .total-row {
   font-weight: 700;
-  background-color: #f3f4f6;
-  border-top: 2px solid #e5e7eb;
+  background-color: #111827;
+  border-top: 2px solid #374151;
+  color: #ffffff;
 }
 
 .card {
@@ -117,20 +122,21 @@ h6 {
   border: none;
   transition: var(--transition);
   overflow: hidden;
-  background-color: white;
+  background-color: #1f2937;
 }
 
 .card-header {
-  background-color: #f9fafb;
-  border-bottom: 1px solid #e5e7eb;
+  background-color: #111827;
+  border-bottom: 1px solid #374151;
   padding: 1rem 1.5rem;
   font-weight: 600;
+  color: #ffffff;
 }
 
 /* Datepicker styles moved to datepicker.module.css */
 
 .calculation-method {
-  background-color: white;
+  background-color: #1f2937;
   border-radius: var(--border-radius);
   padding: 0;
   margin-bottom: 1.5rem;
@@ -144,18 +150,19 @@ h6 {
   display: flex;
   justify-content: space-between;
   padding: 1rem 1.5rem;
-  border-bottom: 1px solid #a5a4ff;
+  border-bottom: 1px solid #374151;
+  color: #ffffff;
 }
 
 .calculation-total {
   display: flex;
   justify-content: space-between;
   padding: 1rem 1.5rem;
-  background-color: #e4e4ff;
+  background-color: #111827;
   font-weight: 700;
-  border-top: 2px solid #a5a4ff;
+  border-top: 2px solid #374151;
   font-size: 1.05rem;
-  color: var(--primary);
+  color: #60a5fa;
 }
 
 .trm-value {
@@ -183,18 +190,20 @@ h6 {
 
 .formula-explanation {
   padding: 1.5rem;
-  background-color: #f9fafb;
+  background-color: #111827;
   border-radius: var(--border-radius);
   margin: 1.5rem 0;
   box-shadow: var(--card-shadow);
+  color: #ffffff;
 }
 
 .contributions-list {
-  background-color: white;
+  background-color: #111827;
   border-radius: var(--border-radius);
   padding: 1rem 1.5rem;
   margin: 1rem 0;
   box-shadow: var(--card-shadow);
+  color: #ffffff;
 }
 
 @keyframes fadeIn {
@@ -254,106 +263,21 @@ h6 {
 .btn-primary:hover {
   background-color: var(--primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 12px rgba(96, 165, 250, 0.3);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary: #60a5fa;
-    --primary-hover: #93c5fd;
-    --border-color: #374151;
-    --light: #1f2937;
-    --dark: #e5e7eb;
-  }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff;
+  -webkit-box-shadow: 0 0 0px 1000px #1f2937 inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
 
-  body {
-    background-color: #111827;
-    color: #ffffff;
-  }
+.text-secondary {
+  color: #e4e4ff !important;
+}
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: #ffffff;
-  }
-
-  .card,
-  .table,
-  .calculation-method {
-    background-color: #1f2937;
-    border-color: #374151;
-  }
-
-  .card-header,
-  .table th {
-    background-color: #111827;
-    border-color: #374151;
-    color: #ffffff;
-  }
-
-  .calculation-detail {
-    border-color: #374151;
-    color: #ffffff;
-  }
-
-  .calculation-total {
-    background-color: #111827;
-    border-color: #374151;
-    color: #60a5fa;
-  }
-
-  code {
-    background-color: #1f2937;
-    color: #93c5fd;
-  }
-
-  .form-control {
-    background-color: #1f2937;
-    border-color: #374151;
-    color: #ffffff;
-  }
-
-  .form-control:focus {
-    border-color: var(--primary);
-    background-color: #1f2937;
-  }
-
-  .table th {
-    background-color: #111827;
-    color: #ffffff;
-  }
-
-  .total-row {
-    background-color: #111827;
-    color: #ffffff;
-  }
-
-  .formula-explanation {
-    background-color: #111827;
-    color: #ffffff;
-  }
-
-  .contributions-list {
-    background-color: #111827;
-    color: #ffffff;
-  }
-
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus {
-    -webkit-text-fill-color: #ffffff;
-    -webkit-box-shadow: 0 0 0px 1000px #1f2937 inset;
-    transition: background-color 5000s ease-in-out 0s;
-  }
-
-  .text-secondary {
-    color: #e4e4ff !important;
-  }
-
-  .text-muted {
-    color: #a5a4ff !important;
-  }
+.text-muted {
+  color: #a5a4ff !important;
 }

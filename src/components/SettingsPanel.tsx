@@ -153,7 +153,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
 
                 <div className="item-amount-field">
                   <div className="flex">
-                    <div className="inline-flex items-center justify-center rounded-l-md border border-input px-2 text-sm">
+                    <div className="inline-flex items-center justify-center rounded-l-md border border-muted-foreground px-2 text-sm">
                       USD
                     </div>
                     <Input
