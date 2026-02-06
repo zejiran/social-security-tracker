@@ -40,13 +40,15 @@ export const useAppState = () => {
 
     if (Array.isArray(savedEntries) && savedEntries.length > 0) {
       const updatedEntries = savedEntries.map(entry => {
-        const matchingItem = recurringItems.find(item => item.id === entry.itemId);
+        // Set default currency if missing
         if (!entry.currency) {
           entry.currency = 'USD';
         }
-        if (matchingItem && entry.name !== matchingItem.name) {
-          return { ...entry, name: matchingItem.name };
+        // Convert date string back to Date object if needed
+        if (entry.date && !(entry.date instanceof Date)) {
+          entry.date = new Date(entry.date);
         }
+        // Preserve user's custom entry names - do not sync with recurring items
         return entry;
       });
 
