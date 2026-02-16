@@ -16,6 +16,10 @@ interface SocialSecurityCalculatorProps {
   setCostosPercent: (value: number) => void;
   includeSolidarity: boolean;
   setIncludeSolidarity: (value: boolean) => void;
+  includeCCF: boolean;
+  setIncludeCCF: (value: boolean) => void;
+  ccfPercentage: number;
+  setCCFPercentage: (value: number) => void;
   currentMonth: Date;
 }
 
@@ -25,12 +29,18 @@ const SocialSecurityCalculator: React.FC<SocialSecurityCalculatorProps> = ({
   setCostosPercent,
   includeSolidarity = APP_CONFIG.DEFAULT_INCLUDE_SOLIDARITY,
   setIncludeSolidarity,
+  includeCCF = APP_CONFIG.DEFAULT_INCLUDE_CCF,
+  setIncludeCCF,
+  ccfPercentage = APP_CONFIG.DEFAULT_CCF_PERCENTAGE,
+  setCCFPercentage,
   currentMonth = new Date(),
 }) => {
   const { direct, presumption } = calculateBothMethods(
     totalIncome,
     costosPercent,
-    includeSolidarity
+    includeSolidarity,
+    includeCCF,
+    ccfPercentage
   );
 
   const formatCOP = (value: number): string => {
@@ -109,8 +119,8 @@ const SocialSecurityCalculator: React.FC<SocialSecurityCalculatorProps> = ({
         </div>
 
         <div className="settings-controls">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-            <div className="md:col-span-7">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-4">
+            <div className="md:w-5/12">
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
                   <Label htmlFor="cost-percentage">Cost Percentage</Label>
@@ -128,14 +138,38 @@ const SocialSecurityCalculator: React.FC<SocialSecurityCalculatorProps> = ({
                 />
               </div>
             </div>
-            <div className="md:col-span-5">
-              <div className="flex items-center space-x-2 h-full">
-                <Switch
-                  id="include-solidarity"
-                  checked={includeSolidarity}
-                  onCheckedChange={setIncludeSolidarity}
-                />
-                <Label htmlFor="include-solidarity">Include Solidarity (1%)</Label>
+            <div>
+              <div className="flex items-center gap-4 flex-wrap">
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    id="include-solidarity"
+                    checked={includeSolidarity}
+                    onCheckedChange={setIncludeSolidarity}
+                  />
+                  <Label htmlFor="include-solidarity">Include Solidarity (1%)</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Switch id="include-ccf" checked={includeCCF} onCheckedChange={setIncludeCCF} />
+                  <Label htmlFor="include-ccf">Include CCF</Label>
+                  {includeCCF && (
+                    <div className="flex items-center ml-2">
+                      <button
+                        type="button"
+                        onClick={() => setCCFPercentage(0.006)}
+                        className={`w-10 py-0.5 text-xs text-center rounded-l-md border border-muted-foreground ${ccfPercentage === 0.006 ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}
+                      >
+                        0.6%
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setCCFPercentage(0.02)}
+                        className={`w-10 py-0.5 text-xs text-center rounded-r-md border border-l-0 border-muted-foreground ${ccfPercentage === 0.02 ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}
+                      >
+                        2%
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -170,6 +204,12 @@ const SocialSecurityCalculator: React.FC<SocialSecurityCalculatorProps> = ({
                     Solidarity ({formatPercent(APP_CONFIG.FORMULA.SOLIDARITY_PERCENTAGE)})
                   </span>
                   <span>{formatCOP(direct.solidarity)}</span>
+                </div>
+              )}
+              {includeCCF && (
+                <div className="calculation-detail">
+                  <span>CCF ({formatPercent(ccfPercentage)})</span>
+                  <span>{formatCOP(direct.ccf)}</span>
                 </div>
               )}
               <div className="calculation-total">
@@ -217,6 +257,12 @@ const SocialSecurityCalculator: React.FC<SocialSecurityCalculatorProps> = ({
                     Solidarity ({formatPercent(APP_CONFIG.FORMULA.SOLIDARITY_PERCENTAGE)})
                   </span>
                   <span>{formatCOP(presumption.solidarity)}</span>
+                </div>
+              )}
+              {includeCCF && (
+                <div className="calculation-detail">
+                  <span>CCF ({formatPercent(ccfPercentage)})</span>
+                  <span>{formatCOP(presumption.ccf)}</span>
                 </div>
               )}
               <div className="calculation-total">
@@ -280,6 +326,11 @@ const SocialSecurityCalculator: React.FC<SocialSecurityCalculatorProps> = ({
               base
             </li>
           )}
+          {includeCCF && (
+            <li>
+              CCF: <code>{formatPercent(ccfPercentage)}</code> of base
+            </li>
+          )}
         </ul>
 
         <div className="rounded-note mt-4">
@@ -306,6 +357,7 @@ const SocialSecurityCalculator: React.FC<SocialSecurityCalculatorProps> = ({
                 {includeSolidarity && (
                   <th>Solidarity ({formatPercent(APP_CONFIG.FORMULA.SOLIDARITY_PERCENTAGE)})</th>
                 )}
+                {includeCCF && <th>CCF ({formatPercent(ccfPercentage)})</th>}
                 <th>Total to Pay</th>
               </tr>
             </thead>
@@ -318,6 +370,7 @@ const SocialSecurityCalculator: React.FC<SocialSecurityCalculatorProps> = ({
                 <td>{formatCOP(direct.health)}</td>
                 <td>{formatCOP(direct.pension)}</td>
                 {includeSolidarity && <td>{formatCOP(direct.solidarity)}</td>}
+                {includeCCF && <td>{formatCOP(direct.ccf)}</td>}
                 <td className="total-column">{formatCOP(direct.roundedTotal)}</td>
               </tr>
               <tr className="presumption-row">
@@ -328,6 +381,7 @@ const SocialSecurityCalculator: React.FC<SocialSecurityCalculatorProps> = ({
                 <td>{formatCOP(presumption.health)}</td>
                 <td>{formatCOP(presumption.pension)}</td>
                 {includeSolidarity && <td>{formatCOP(presumption.solidarity)}</td>}
+                {includeCCF && <td>{formatCOP(presumption.ccf)}</td>}
                 <td className="total-column">{formatCOP(presumption.roundedTotal)}</td>
               </tr>
               <tr className="difference-row">
@@ -340,6 +394,7 @@ const SocialSecurityCalculator: React.FC<SocialSecurityCalculatorProps> = ({
                 {includeSolidarity && (
                   <td>{formatCOP(Math.abs(direct.solidarity - presumption.solidarity))}</td>
                 )}
+                {includeCCF && <td>{formatCOP(Math.abs(direct.ccf - presumption.ccf))}</td>}
                 <td className="total-column">
                   {formatCOP(Math.abs(direct.roundedTotal - presumption.roundedTotal))}
                 </td>

@@ -26,6 +26,12 @@ export const useAppState = () => {
     loadFromLocalStorage<boolean>(STORAGE_KEYS.INCLUDE_SOLIDARITY) ||
       APP_CONFIG.DEFAULT_INCLUDE_SOLIDARITY
   );
+  const [includeCCF, setIncludeCCF] = useState<boolean>(
+    loadFromLocalStorage<boolean>(STORAGE_KEYS.INCLUDE_CCF) || APP_CONFIG.DEFAULT_INCLUDE_CCF
+  );
+  const [ccfPercentage, setCCFPercentage] = useState<number>(
+    loadFromLocalStorage<number>(STORAGE_KEYS.CCF_PERCENTAGE) || APP_CONFIG.DEFAULT_CCF_PERCENTAGE
+  );
   const [totalCOP, setTotalCOP] = useState<number>(0);
 
   const getMonthKey = (date: Date): string => {
@@ -90,10 +96,20 @@ export const useAppState = () => {
     saveToLocalStorage(STORAGE_KEYS.RECURRING_ITEMS, recurringItems);
     saveToLocalStorage(STORAGE_KEYS.COSTOS_PERCENT, costosPercent);
     saveToLocalStorage(STORAGE_KEYS.INCLUDE_SOLIDARITY, includeSolidarity);
+    saveToLocalStorage(STORAGE_KEYS.INCLUDE_CCF, includeCCF);
+    saveToLocalStorage(STORAGE_KEYS.CCF_PERCENTAGE, ccfPercentage);
 
     const monthKey = getMonthKey(currentMonth);
     saveToLocalStorage(`${STORAGE_KEYS.ENTRIES_PREFIX}${monthKey}`, incomeEntries);
-  }, [recurringItems, costosPercent, includeSolidarity, incomeEntries, currentMonth]);
+  }, [
+    recurringItems,
+    costosPercent,
+    includeSolidarity,
+    includeCCF,
+    ccfPercentage,
+    incomeEntries,
+    currentMonth,
+  ]);
 
   return {
     // State
@@ -107,6 +123,10 @@ export const useAppState = () => {
     setCostosPercent,
     includeSolidarity,
     setIncludeSolidarity,
+    includeCCF,
+    setIncludeCCF,
+    ccfPercentage,
+    setCCFPercentage,
     totalCOP,
 
     // Derived state

@@ -2,6 +2,8 @@ export const APP_CONFIG = {
   DEFAULT_TRM: 4000,
   DEFAULT_COSTOS_PERCENT: 0.6117,
   DEFAULT_INCLUDE_SOLIDARITY: false,
+  DEFAULT_INCLUDE_CCF: false,
+  DEFAULT_CCF_PERCENTAGE: 0.006,
   TRM_API_URL: 'https://trm-colombia.vercel.app/',
   STORAGE_VERSION: '1.0.0',
   FORMULA: {
@@ -31,6 +33,8 @@ export const STORAGE_KEYS = {
   RECURRING_ITEMS: 'recurringItems',
   COSTOS_PERCENT: 'costosPercent',
   INCLUDE_SOLIDARITY: 'includeSolidarity',
+  INCLUDE_CCF: 'includeCCF',
+  CCF_PERCENTAGE: 'ccfPercentage',
   ENTRIES_PREFIX: 'entries-',
   TRM_CACHE_PREFIX: 'trm-',
   SETTINGS: 'settings',

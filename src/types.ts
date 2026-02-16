@@ -19,6 +19,7 @@ export interface SocialSecurityCalculation {
   health: number;
   pension: number;
   solidarity: number;
+  ccf: number;
   total: number;
   roundedTotal: number;
 }
@@ -28,6 +29,8 @@ export interface MonthlyData {
   totalCOP: number;
   costosPercent: number;
   includeSolidarity: boolean;
+  includeCCF: boolean;
+  ccfPercentage: number;
   calculation?: {
     direct: SocialSecurityCalculation;
     presumption: SocialSecurityCalculation;
@@ -38,6 +41,8 @@ export interface UserSettings {
   recurringItems: RecurringItem[];
   defaultCostosPercent: number;
   defaultIncludeSolidarity: boolean;
+  defaultIncludeCCF: boolean;
+  defaultCCFPercentage: number;
 }
 
 export type TRMFetchFunction = (date: Date) => Promise<number>;

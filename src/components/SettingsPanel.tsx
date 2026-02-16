@@ -20,6 +20,10 @@ interface SettingsPanelProps {
   setCostosPercent: (value: number) => void;
   includeSolidarity: boolean;
   setIncludeSolidarity: (value: boolean) => void;
+  includeCCF: boolean;
+  setIncludeCCF: (value: boolean) => void;
+  ccfPercentage: number;
+  setCCFPercentage: (value: number) => void;
 }
 
 const SettingsPanel: React.FC<SettingsPanelProps> = ({
@@ -32,6 +36,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
   setCostosPercent,
   includeSolidarity,
   setIncludeSolidarity,
+  includeCCF,
+  setIncludeCCF,
+  ccfPercentage,
+  setCCFPercentage,
 }) => {
   const safeItems = React.useMemo(
     () => (Array.isArray(recurringItems) ? recurringItems : []),
@@ -199,8 +207,8 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div>
-            <Card className="settings-card mb-4">
+          <div className="flex">
+            <Card className="settings-card mb-4 w-full">
               <CardHeader>
                 <h5 className="mb-0">Default Cost Percentage</h5>
               </CardHeader>
@@ -253,6 +261,45 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                 </div>
               </CardContent>
             </Card>
+
+            <Card className="settings-card mb-4">
+              <CardHeader>
+                <h5 className="mb-0">CCF Contribution</h5>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4 text-white">
+                  <div className="flex items-center space-x-2">
+                    <Switch id="default-ccf" checked={includeCCF} onCheckedChange={setIncludeCCF} />
+                    <Label htmlFor="default-ccf">Include CCF Contribution by default</Label>
+                  </div>
+                  {includeCCF && (
+                    <div className="flex items-center space-x-2">
+                      <Label>CCF Rate:</Label>
+                      <div className="flex items-center">
+                        <button
+                          type="button"
+                          onClick={() => setCCFPercentage(0.006)}
+                          className={`w-12 py-1 text-sm text-center rounded-l-md border border-muted-foreground ${ccfPercentage === 0.006 ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}
+                        >
+                          0.6%
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setCCFPercentage(0.02)}
+                          className={`w-12 py-1 text-sm text-center rounded-r-md border border-l-0 border-muted-foreground ${ccfPercentage === 0.02 ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}
+                        >
+                          2%
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  <p className="text-muted-foreground text-sm">
+                    When enabled, the CCF (Caja de Compensación Familiar) contribution will be
+                    included in calculations automatically.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
 
@@ -291,13 +338,22 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                   <div className="formula-description">Of the calculated base amount</div>
                 </div>
               </div>
-              <div className="formula-setting w-full">
-                <div className="flex flex-col w-full">
-                  <div className="formula-label">Solidarity Contribution</div>
-                  <div className="formula-value">
-                    {APP_CONFIG.FORMULA.SOLIDARITY_PERCENTAGE * 100}%
+              <div className="grid grid-cols-2 gap-4 w-full">
+                <div className="formula-setting w-full">
+                  <div className="flex flex-col w-full">
+                    <div className="formula-label">Solidarity Contribution</div>
+                    <div className="formula-value">
+                      {APP_CONFIG.FORMULA.SOLIDARITY_PERCENTAGE * 100}%
+                    </div>
+                    <div className="formula-description">Optional, based on your settings</div>
                   </div>
-                  <div className="formula-description">Optional, based on your settings</div>
+                </div>
+                <div className="formula-setting w-full">
+                  <div className="flex flex-col w-full">
+                    <div className="formula-label">CCF Contribution</div>
+                    <div className="formula-value">{(ccfPercentage * 100).toFixed(1)}%</div>
+                    <div className="formula-description">Optional, selectable: 0.6% or 2.0%</div>
+                  </div>
                 </div>
               </div>
             </div>

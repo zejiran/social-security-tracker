@@ -18,6 +18,8 @@ const AppContent: React.FC = () => {
     incomeEntries,
     costosPercent,
     includeSolidarity,
+    includeCCF,
+    ccfPercentage,
     totalCOP,
     setCurrentMonth,
     handleEntryChange,
@@ -31,6 +33,8 @@ const AppContent: React.FC = () => {
     removeIncomeEntry,
     setCostosPercent,
     setIncludeSolidarity,
+    setIncludeCCF,
+    setCCFPercentage,
     updateTRM,
     exportCurrentMonth,
   } = useAppContext();
@@ -86,6 +90,10 @@ const AppContent: React.FC = () => {
             setCostosPercent={setCostosPercent}
             includeSolidarity={includeSolidarity}
             setIncludeSolidarity={setIncludeSolidarity}
+            includeCCF={includeCCF}
+            setIncludeCCF={setIncludeCCF}
+            ccfPercentage={ccfPercentage}
+            setCCFPercentage={setCCFPercentage}
             currentMonth={currentMonth}
           />
         </TabsContent>
@@ -101,6 +109,10 @@ const AppContent: React.FC = () => {
             setCostosPercent={setCostosPercent}
             includeSolidarity={includeSolidarity}
             setIncludeSolidarity={setIncludeSolidarity}
+            includeCCF={includeCCF}
+            setIncludeCCF={setIncludeCCF}
+            ccfPercentage={ccfPercentage}
+            setCCFPercentage={setCCFPercentage}
           />
         </TabsContent>
       </Tabs>

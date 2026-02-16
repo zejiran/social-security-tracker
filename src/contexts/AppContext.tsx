@@ -13,6 +13,8 @@ interface AppContextType {
   incomeEntries: IncomeEntry[];
   costosPercent: number;
   includeSolidarity: boolean;
+  includeCCF: boolean;
+  ccfPercentage: number;
   totalCOP: number;
 
   // Actions
@@ -31,6 +33,8 @@ interface AppContextType {
   removeIncomeEntry: (entryIndex: number) => void;
   setCostosPercent: (value: number) => void;
   setIncludeSolidarity: (value: boolean) => void;
+  setIncludeCCF: (value: boolean) => void;
+  setCCFPercentage: (value: number) => void;
   updateTRM: (entryIndex: number, date: Date) => Promise<void>;
   exportCurrentMonth: () => void;
 }
@@ -49,6 +53,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     setCostosPercent,
     includeSolidarity,
     setIncludeSolidarity,
+    includeCCF,
+    setIncludeCCF,
+    ccfPercentage,
+    setCCFPercentage,
     totalCOP,
   } = useAppState();
 
@@ -202,7 +210,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const exportCurrentMonth = (): void => {
     const monthName = currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-    exportToExcel(incomeEntries, totalCOP, costosPercent, includeSolidarity, monthName);
+    exportToExcel(
+      incomeEntries,
+      totalCOP,
+      costosPercent,
+      includeSolidarity,
+      includeCCF,
+      ccfPercentage,
+      monthName
+    );
   };
 
   const reorderRecurringItems = (newItems: RecurringItem[]): void => {
@@ -260,6 +276,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     incomeEntries,
     costosPercent,
     includeSolidarity,
+    includeCCF,
+    ccfPercentage,
     totalCOP,
 
     setCurrentMonth,
@@ -273,6 +291,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     removeIncomeEntry,
     setCostosPercent,
     setIncludeSolidarity,
+    setIncludeCCF,
+    setCCFPercentage,
     updateTRM,
     exportCurrentMonth,
   };

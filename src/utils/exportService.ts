@@ -22,6 +22,8 @@ export const exportToExcel = async (
   totalCOP: number,
   costosPercent: number,
   includeSolidarity: boolean,
+  includeCCF: boolean,
+  ccfPercentage: number,
   monthName: string
 ): Promise<void> => {
   const filteredEntries = incomeEntries.filter(entry => {
@@ -109,6 +111,10 @@ export const exportToExcel = async (
   socialSecuritySheet.addRow(['Total Income (COP)', totalCOP]);
   socialSecuritySheet.addRow(['Costos Percent', `${(costosPercent * 100).toFixed(2)}%`]);
   socialSecuritySheet.addRow(['Include Solidarity', includeSolidarity ? 'Yes' : 'No']);
+  socialSecuritySheet.addRow([
+    'Include CCF',
+    includeCCF ? `Yes (${(ccfPercentage * 100).toFixed(1)}%)` : 'No',
+  ]);
   socialSecuritySheet.addRow([]);
 
   for (let i = 3; i <= 5; i++) {
@@ -118,7 +124,13 @@ export const exportToExcel = async (
     }
   }
 
-  const { direct, presumption } = calculateBothMethods(totalCOP, costosPercent, includeSolidarity);
+  const { direct, presumption } = calculateBothMethods(
+    totalCOP,
+    costosPercent,
+    includeSolidarity,
+    includeCCF,
+    ccfPercentage
+  );
 
   const headerRow = socialSecuritySheet.addRow([
     'Calculation Type',
@@ -167,6 +179,17 @@ export const exportToExcel = async (
       direct.solidarity,
       '',
       presumption.solidarity,
+    ]);
+  }
+
+  // CCF (if included)
+  if (includeCCF) {
+    socialSecuritySheet.addRow([
+      `CCF (${(ccfPercentage * 100).toFixed(1)}%)`,
+      '',
+      direct.ccf,
+      '',
+      presumption.ccf,
     ]);
   }
 

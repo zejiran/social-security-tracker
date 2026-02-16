@@ -5,6 +5,7 @@ import {
   calculatePension,
   calculateSocialSecurity,
   calculateSolidarity,
+  calculateCCF,
   calculateBothMethods,
 } from '../calculations';
 
@@ -95,12 +96,44 @@ describe('calculation utils', () => {
     });
   });
 
+  describe('calculateCCF', () => {
+    it('should calculate CCF contribution when included', () => {
+      const base = 2000000;
+      const ccfPercentage = 0.006;
+      const expected = base * ccfPercentage;
+
+      const result = calculateCCF(base, true, ccfPercentage);
+
+      expect(result).toBe(expected);
+    });
+
+    it('should return 0 when CCF is not included', () => {
+      const base = 2000000;
+
+      const result = calculateCCF(base, false, 0.006);
+
+      expect(result).toBe(0);
+    });
+
+    it('should calculate with different CCF percentages', () => {
+      const base = 2000000;
+      const ccfPercentage = 0.02;
+      const expected = base * ccfPercentage;
+
+      const result = calculateCCF(base, true, ccfPercentage);
+
+      expect(result).toBe(expected);
+    });
+  });
+
   describe('calculateSocialSecurity', () => {
     it('should calculate all values correctly for direct method', () => {
       // Arrange
       const totalIncome = 5000000;
       const costosPercent = 0.25;
       const includeSolidarity = true;
+      const includeCCF = false;
+      const ccfPercentage = 0.006;
       const isPresumption = false;
 
       const base = totalIncome * APP_CONFIG.FORMULA.BASE_PERCENTAGE;
@@ -115,6 +148,8 @@ describe('calculation utils', () => {
         totalIncome,
         costosPercent,
         includeSolidarity,
+        includeCCF,
+        ccfPercentage,
         isPresumption
       );
 
@@ -123,8 +158,28 @@ describe('calculation utils', () => {
       expect(result.health).toBe(health);
       expect(result.pension).toBe(pension);
       expect(result.solidarity).toBe(solidarity);
+      expect(result.ccf).toBe(0);
       expect(result.total).toBe(total);
       expect(result.roundedTotal).toBe(roundedTotal);
+    });
+
+    it('should include CCF in total when enabled', () => {
+      const totalIncome = 5000000;
+      const costosPercent = 0.25;
+      const ccfPercentage = 0.02;
+
+      const result = calculateSocialSecurity(
+        totalIncome,
+        costosPercent,
+        false,
+        true,
+        ccfPercentage,
+        false
+      );
+
+      const base = totalIncome * APP_CONFIG.FORMULA.BASE_PERCENTAGE;
+      expect(result.ccf).toBe(base * ccfPercentage);
+      expect(result.total).toBe(result.health + result.pension + result.ccf);
     });
 
     it('should round the total up to the nearest 100', () => {
@@ -139,6 +194,8 @@ describe('calculation utils', () => {
         totalIncome,
         costosPercent,
         includeSolidarity,
+        false,
+        0.006,
         isPresumption
       );
 
@@ -157,7 +214,13 @@ describe('calculation utils', () => {
       const includeSolidarity = true;
 
       // Act
-      const result = calculateBothMethods(totalIncome, costosPercent, includeSolidarity);
+      const result = calculateBothMethods(
+        totalIncome,
+        costosPercent,
+        includeSolidarity,
+        false,
+        0.006
+      );
 
       // Assert
       expect(result).toHaveProperty('direct');

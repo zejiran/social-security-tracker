@@ -57,6 +57,18 @@ export const calculateSolidarity = (base: number, includeSolidarity: boolean): n
 };
 
 /**
+ * Calculate CCF contribution (selectable between 0.6% and 2% of base, if applicable)
+ *
+ * @param base - Base amount for calculations
+ * @param includeCCF - Whether to include the CCF contribution
+ * @param ccfPercentage - The CCF percentage to apply (between 0.006 and 0.02)
+ * @returns CCF contribution amount
+ */
+export const calculateCCF = (base: number, includeCCF: boolean, ccfPercentage: number): number => {
+  return includeCCF ? base * ccfPercentage : 0;
+};
+
+/**
  * Perform all social security calculations
  *
  * @param totalIncome - Total income in COP
@@ -69,13 +81,16 @@ export const calculateSocialSecurity = (
   totalIncome: number,
   costosPercent: number,
   includeSolidarity: boolean,
+  includeCCF: boolean,
+  ccfPercentage: number,
   isPresumption: boolean
 ): SocialSecurityCalculation => {
   const base = calculateBase(totalIncome, costosPercent, isPresumption);
   const health = calculateHealth(base);
   const pension = calculatePension(base);
   const solidarity = calculateSolidarity(base, includeSolidarity);
-  const total = health + pension + solidarity;
+  const ccf = calculateCCF(base, includeCCF, ccfPercentage);
+  const total = health + pension + solidarity + ccf;
   const roundedTotal = Math.ceil(total / APP_CONFIG.ROUNDING.UNIT) * APP_CONFIG.ROUNDING.UNIT;
 
   return {
@@ -83,6 +98,7 @@ export const calculateSocialSecurity = (
     health,
     pension,
     solidarity,
+    ccf,
     total,
     roundedTotal,
   };
@@ -99,10 +115,26 @@ export const calculateSocialSecurity = (
 export const calculateBothMethods = (
   totalIncome: number,
   costosPercent: number,
-  includeSolidarity: boolean
+  includeSolidarity: boolean,
+  includeCCF: boolean,
+  ccfPercentage: number
 ) => {
   return {
-    direct: calculateSocialSecurity(totalIncome, costosPercent, includeSolidarity, false),
-    presumption: calculateSocialSecurity(totalIncome, costosPercent, includeSolidarity, true),
+    direct: calculateSocialSecurity(
+      totalIncome,
+      costosPercent,
+      includeSolidarity,
+      includeCCF,
+      ccfPercentage,
+      false
+    ),
+    presumption: calculateSocialSecurity(
+      totalIncome,
+      costosPercent,
+      includeSolidarity,
+      includeCCF,
+      ccfPercentage,
+      true
+    ),
   };
 };
